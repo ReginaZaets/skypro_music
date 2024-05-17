@@ -308,3 +308,35 @@
 .volumeProgressLine {
   width: 109px;
 }
+.volumeProgress input[type="range"] {
+  /* Удаление стандартных стилей */
+  -webkit-appearance: none;
+  appearance: none;
+  /* Установка размеров */
+  width: 150px;
+  height: 2px;
+  /* Цвет фона */
+  background: white;
+  /* Отступы */
+  margin: 10px 0;
+}
+
+.volumeProgress input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  /* Размеры ползунка */
+  width: 15px;
+  height: 15px;
+  background: black;
+  border: 2px solid #fff; /* Белый ободок вокруг ползунка */
+  border-radius: 50%; /* Скругление углов ползунка */
+  /* Отступ от края */
+}
+
+.volumeProgress input[type="range"]::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  background: black;
+  border: 2px solid #fff; /* Белый ободок вокруг ползунка */
+  border-radius: 50%; /* Скругление углов ползунка */
+}
