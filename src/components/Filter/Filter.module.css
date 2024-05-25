@@ -9,18 +9,17 @@
   position: relative;
   background-color: #1b1b1b;
   color: #ffffff;
-  font-family: StratosSkyeng;
   font-size: 16px;
   margin-right: 10px;
 }
 .btnText:hover {
-  border-color: #B672FF;
-  color: #B672FF;
+  border-color: #b672ff;
+  color: #b672ff;
   cursor: pointer;
 }
-.btnText:active {
-  border-color: #B672FF;
-  color: #B672FF;
+.btnText:focus {
+  border-color: #b672ff;
+  color: #b672ff;
   cursor: pointer;
 }
 .list {
@@ -30,23 +29,28 @@
   border: 12px;
   background-color: #313131;
   border-radius: 20px;
+  padding: 34px;
+  height: 305px;
 }
 .listItem {
-  width: 200px;
-  height: 305px;
-  padding: 34px;
+  width: 180px;
+  height: 250px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  overflow: scroll;
+  gap: 25px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 .listItem li {
   gap: 10px;
-  font-family: StratosSkyeng;
   font-size: 20px;
   line-height: 24px;
 }
 .listItem li:hover {
+  color: #b672ff;
+  text-decoration: underline;
+}
+.listItem li:active {
   color: #b672ff;
   text-decoration: underline;
 }
