@@ -1,0 +1,70 @@
+.barVolumeBlock {
+    width: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 92px 0 0;
+  }
+  .volumeContent {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+  }
+  .volumeImage {
+    width: 13px;
+    height: 18px;
+    margin-right: 17px;
+  }
+  .volumeSvg {
+    width: 13px;
+    height: 18px;
+    margin-right: 17px;
+  }
+  .volumeProgress {
+    width: 109px;
+  }
+  .volumeProgressLine {
+    width: 109px;
+  }
+  .volumeProgress input[type="range"] {
+    /* Удаление стандартных стилей */
+    -webkit-appearance: none;
+    appearance: none;
+    /* Установка размеров */
+    width: 150px;
+    height: 2px;
+    background: white;
+    margin: 10px 0;
+  }
+  /*ползунок*/
+  .volumeProgress input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: black;
+    border: 2px solid #fff; 
+    border-radius: 50%; 
+  }
+  
+  .volumeProgress input[type="range"]::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    background: black;
+    border: 2px solid #fff; 
+    border-radius: 50%; 
+  }
+  

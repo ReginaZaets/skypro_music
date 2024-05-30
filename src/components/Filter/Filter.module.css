@@ -18,8 +18,8 @@
   cursor: pointer;
 }
 .btnText:focus {
-  border-color: #b672ff;
-  color: #b672ff;
+  border-color: #AD61FF;
+  color: #AD61FF;
   cursor: pointer;
 }
 .list {
@@ -51,6 +51,6 @@
   text-decoration: underline;
 }
 .listItem li:active {
-  color: #b672ff;
+  color: #AD61FF;
   text-decoration: underline;
 }

@@ -115,8 +115,8 @@
 }
 .btnIcon:hover svg {
   fill: transparent;
-  stroke: #acacac;
-  cursor: pointer;
+  /* stroke: #acacac;
+  cursor: pointer; */
 }
 
 .btnIcon:active svg {
@@ -124,7 +124,11 @@
   stroke: #ffffff;
   cursor: pointer;
 }
-
+.btnIcon:active {
+  fill: #696969;
+  stroke: #ffffff;
+  cursor: pointer;
+}
 .btnIcon:active {
   fill: #696969;
   stroke: #ffffff;
@@ -133,8 +137,8 @@
 .playerBtnRepeatSvg {
   width: 18px;
   height: 12px;
-  fill: transparent;
-  stroke: #696969;
+  /* fill: transparent;
+    stroke: #696969; */
 }
 .playerBtnShuffle {
   padding: 5px;
@@ -325,14 +329,18 @@
   width: 15px;
   height: 15px;
   background: black;
-  border: 2px solid #fff; 
-  border-radius: 50%; 
+  border: 2px solid #fff;
+  border-radius: 50%;
 }
 
 .volumeProgress input[type="range"]::-moz-range-thumb {
   width: 10px;
   height: 10px;
   background: black;
-  border: 2px solid #fff; 
-  border-radius: 50%; 
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+.currentTime {
+  display: flex;
+  justify-content: flex-end;
 }

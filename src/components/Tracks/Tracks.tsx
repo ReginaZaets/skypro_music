@@ -1,7 +1,11 @@
 import { TrackType } from "../../lib/type";
 import styles from "./Tracks.module.css";
+type Props = {
+  tracks: TrackType;
+  onClick: () => void;
+};
 
-function Tracks({ tracks }: { tracks: TrackType }) {
+function Tracks({ tracks, onClick }: Props) {
   function formatDate(second: number) {
     const minutes = Math.floor(second / 60);
     const remainingSeconds = second & 60;
@@ -11,7 +15,7 @@ function Tracks({ tracks }: { tracks: TrackType }) {
   }
   return (
     // <div className={styles.centerblockContent}>
-    <div className={styles.contentPlaylist}>
+    <div onClick={onClick} className={styles.contentPlaylist}>
       <div className={styles.playlistItem}>
         <div className={styles.playlistTrack}>
           <div className={styles.trackTitle}>

@@ -1,6 +1,6 @@
-export async function apiTracksId() {
+export async function apiTracksId(id:number) {
   const response = await fetch(
-    "https://skypro-music-api.skyeng.tech/catalog/track/<id>"
+    `https://skypro-music-api.skyeng.tech/catalog/track/${id}`
   );
   if (!response.ok) {
     throw new Error("Ошибка");

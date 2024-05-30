@@ -2,9 +2,6 @@
 import React, { useState } from "react";
 import styles from "./Sorting.module.css";
 import Filter from "@components/Filter/Filter";
-type FilterSorting = {
-  FilterData: string[];
-};
 
 const Sorting = ({
   FilterData,
