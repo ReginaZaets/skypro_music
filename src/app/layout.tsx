@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 
-const montserratnter = Montserrat({ subsets: ["cyrillic"] });
+const montserrat = Montserrat({ subsets: ["cyrillic"] });
 
 export const metadata: Metadata = {
   title: "Skypro",
@@ -20,7 +20,7 @@ export default function RootLayout({
         <meta httpe-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={montserratnter.className}>{children}</body>
+      <body className={montserrat.className}>{children}</body>
     </html>
   );
 }

@@ -14,7 +14,7 @@ type PlayTrack = {
 const Main = ({ setTrack }: PlayTrack) => {
   const [allTracks, setAllTracks] = useState<TrackType[]>([]);
   // const tracks: TrackType[] = await tracksApi();
-  // console.log(tracks);
+  console.log(allTracks);
   useEffect(() => {
     tracksApi()
       .then((response) => setAllTracks(response))
@@ -62,13 +62,15 @@ const Main = ({ setTrack }: PlayTrack) => {
             </svg>
           </div>
         </div>
-        {allTracks.map((tracks: TrackType) => (
-          <Tracks
-            key={tracks.id}
-            tracks={tracks}
-            onClick={() => setTrack(tracks)}
-          />
-        ))}
+        <div className={styles.playList}>
+          {allTracks.map((tracks: TrackType) => (
+            <Tracks
+              key={tracks.id}
+              tracks={tracks}
+              onClick={() => setTrack(tracks)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

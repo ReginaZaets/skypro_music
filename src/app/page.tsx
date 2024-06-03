@@ -8,7 +8,7 @@ import Bar from "@components/Bar/Bar";
 import { useState } from "react";
 import { TrackType } from "../lib/type";
 
-export default function Home() {
+const Home = () => {
   const [track, setTrack] = useState<TrackType | null>(null);
   return (
     <div className={styles.wrapper}>
@@ -23,4 +23,5 @@ export default function Home() {
       </div>
     </div>
   );
-}
+};
+export default Home;

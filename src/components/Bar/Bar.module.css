@@ -115,20 +115,25 @@
 }
 .btnIcon:hover svg {
   fill: transparent;
-  /* stroke: #acacac;
-  cursor: pointer; */
+  stroke: #acacac;
+  cursor: pointer;
 }
 
-.btnIcon:active svg {
+/* .btnIcon:active svg {
   fill: transparent;
   stroke: #ffffff;
   cursor: pointer;
-}
-.btnIcon:active {
-  fill: #696969;
+} */
+.active {
+  fill: #ffffff;
   stroke: #ffffff;
   cursor: pointer;
 }
+/* .btnIcon:active {
+  fill: #696969;
+  stroke: #ffffff;
+  cursor: pointer;
+} */
 .btnIcon:active {
   fill: #696969;
   stroke: #ffffff;
@@ -138,7 +143,7 @@
   width: 18px;
   height: 12px;
   /* fill: transparent;
-    stroke: #696969; */
+  stroke: #696969; */
 }
 .playerBtnShuffle {
   padding: 5px;
