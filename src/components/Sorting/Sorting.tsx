@@ -2,19 +2,24 @@
 import React, { useState } from "react";
 import styles from "./Sorting.module.css";
 import Filter from "@components/Filter/Filter";
-type FilterSorting = {
-  FilterData: string[];
+
+type PropsFilter = {
+  title: string;
+  list: string[];
+  value: string;
 };
 
-const Sorting = ({
-  FilterData,
-}: {
-  FilterData: Array<{ title: string; list: string[]; value: string }>;
-}) => {
+type Props = {
+  FilterData: Array<PropsFilter>;
+};
+
+const Sorting = ({ FilterData }: Props) => {
   const [filterValue, setFilterValue] = useState<string | null>(null);
+
   const handleFilterValue = (value: string) => {
     setFilterValue((prev) => (prev === value ? null : value));
   };
+
   return (
     <div>
       <h2 className={styles.centerblockH2}>Треки</h2>

@@ -5,7 +5,6 @@
   -ms-flex-positive: 3;
   flex-grow: 3;
   padding: 20px 40px 20px 111px;
-  
 }
 .centerblockSearch {
   width: 100%;
@@ -139,8 +138,11 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+  height: 800px;
 }
-
+.playList {
+  overflow-y: auto;
+}
 .contentTitle {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -327,6 +329,6 @@
   padding: 34px;
   gap: 10px;
 }
-.author:active{
+.author:active {
   display: block;
 }
