@@ -1,27 +1,18 @@
-"use client";
-
-import Header from "@components/Header/Header";
-import styles from "./page.module.css";
-import Sidebar from "@components/Sidebar/Sidebar";
-import Main from "@components/Main/Main";
-import Bar from "@components/Bar/Bar";
-import { useState } from "react";
+import { tracksApi } from "../Api/tracksApi";
 import { TrackType } from "../lib/type";
 
-const Home = () => {
-  const [track, setTrack] = useState<TrackType | null>(null);
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <main className={styles.main}>
-          <Header />
-          <Main setTrack={setTrack} />
-          <Sidebar />
-        </main>
-        {track && <Bar track={track} />}
-        <footer className={styles.footer}></footer>
-      </div>
-    </div>
-  );
-};
-export default Home;
+import MainBlock from "@components/MainBlock/MainBlock";
+
+export default async function Home() {
+  let tracks: TrackType[] = [];
+  let error: string | null = null;
+  try {
+    tracks = await tracksApi();
+  } catch (err: unknown) {
+    error =
+      err instanceof Error
+        ? "ошибка при загрузке трека. " + err.message
+        : "неизвестная ошибка";
+  }
+  return <MainBlock tracks={tracks} />;
+}

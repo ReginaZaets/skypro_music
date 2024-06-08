@@ -1,37 +1,59 @@
+"use client";
+import classNames from "classnames";
 import { formatDate } from "../../lib/helper";
 import { TrackType } from "../../lib/type";
 import styles from "./Tracks.module.css";
+import { setCurrentTrack } from "../../store/features/playListSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
 type Props = {
-  tracks: TrackType;
-  onClick: () => void;
+  tracks: TrackType[];
+  track: TrackType;
 };
 
-const Tracks = ({ tracks, onClick }: Props) => {
+const Tracks = ({ tracks, track }: Props) => {
+  const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(setCurrentTrack({ currentTrack: track, currentPlaylist: tracks }));
+  };
+  const { name, author, album, duration_in_seconds } = track;
+  const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
+  const isCurrentTrack = currentTrack?.id === track.id;
   return (
-    <div onClick={onClick} className={styles.contentPlaylist}>
+    <div onClick={handleClick} className={styles.contentPlaylist}>
       <div className={styles.playlistItem}>
         <div className={styles.playlistTrack}>
           <div className={styles.trackTitle}>
             <div className={styles.trackTitleImage}>
-              <svg className={styles.trackTitleSvg}>
-                <use xlinkHref="icon/sprite.svg#icon-note"></use>
+              <svg
+                className={classNames(styles.trackTitleSvg, {
+                  [styles.playingDotActive]: isCurrentTrack,
+                  [styles.playingDot]: isCurrentTrack && isPlaying,
+                })}
+              >
+                <use
+                  xlinkHref={`icon/sprite.svg#${
+                    isCurrentTrack ? "icon-isplaying" : "icon-note"
+                  }`}
+                ></use>
               </svg>
             </div>
             <div>
               <a className={styles.trackTitleLink} href="http://">
-                {tracks.name}
+                {name}
                 <span className={styles.trackTitleSpan}></span>
               </a>
             </div>
           </div>
           <div className={styles.trackAuthor}>
             <a className={styles.trackAuthorLink} href="http://">
-              {tracks.author}
+              {author}
             </a>
           </div>
           <div className={styles.trackAlbum}>
             <a className={styles.trackAlbumLink} href="http://">
-              {tracks.album}
+              {album}
             </a>
           </div>
           <div>
@@ -41,7 +63,7 @@ const Tracks = ({ tracks, onClick }: Props) => {
           </div>
           <div>
             <span className={styles.trackTimeText}>
-              {formatDate(tracks.duration_in_seconds)}
+              {formatDate(duration_in_seconds)}
             </span>
           </div>
         </div>

@@ -1,4 +1,6 @@
-import styles from "./Main.module.css";
+"use client";
+
+import styles from "./CenterBlock.module.css";
 import classNames from "classnames";
 import Tracks from "@components/Tracks/Tracks";
 import { tracksApi } from "../../Api/tracksApi";
@@ -6,29 +8,32 @@ import { TrackType } from "../../lib/type";
 import Sorting from "@components/Sorting/Sorting";
 import { FilterData } from "@components/Filter/FilterData";
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
 
 type PlayTrack = {
-  setTrack: (param: TrackType) => void;
+  tracks: TrackType[];
 };
 
-const Main = ({ setTrack }: PlayTrack) => {
+type Track = {
+  author: string;
+  genre: string;
+};
+
+const Main = ({ tracks }: PlayTrack) => {
   const [allTracks, setAllTracks] = useState<TrackType[]>([]);
-  // const tracks: TrackType[] = await tracksApi();
-  console.log(allTracks);
+
   useEffect(() => {
     tracksApi()
       .then((response) => setAllTracks(response))
       .catch((err) => console.log(err.message));
   }, []);
-  //получаем уникальных авторов без повторений
+  // получаем уникальных авторов без повторений
   const uniqueAuthors = Array.from(
     new Set(allTracks.map((track) => track.author))
   );
   FilterData[0].list = uniqueAuthors;
   //получаем уникальные жанры без повторений
-  const uniqueGenre = Array.from(
-    new Set(allTracks.map((track) => track.genre))
-  );
+  const uniqueGenre = Array.from(new Set(allTracks.map((track) => track.genre)));
   FilterData[2].list = uniqueGenre;
 
   return (
@@ -63,11 +68,11 @@ const Main = ({ setTrack }: PlayTrack) => {
           </div>
         </div>
         <div className={styles.playList}>
-          {allTracks.map((tracks: TrackType) => (
+          {allTracks.map((value) => (
             <Tracks
-              key={tracks.id}
+              key={value.id}
+              track={value}
               tracks={tracks}
-              onClick={() => setTrack(tracks)}
             />
           ))}
         </div>

@@ -1,28 +1,30 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./Bar.module.css";
 import classNames from "classnames";
-import { TrackType } from "../../lib/type";
 import PlayerProgress from "@components/PlayerProgress/PlayerProgress";
 import { TimeBarCurrent, TimeBarDuration } from "../../lib/helper";
+import {
+  nextTrack,
+  prevTrack,
+  setIsPlaying,
+  setIsShuffled,
+  setLoop,
+} from "../../store/features/playListSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
 
-type PlaylistTrack = {
-  track: TrackType;
-};
-
-const Bar = ({ track }: PlaylistTrack) => {
+const Bar = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [volume, setVolume] = useState(0.5);
 
-  // Состояние для зацикливания трека
-  const [loop, setLoop] = useState<boolean>(false);
+ 
   const toggleLoop = () => {
     const audio = audioRef.current;
     if (audio) {
-      audio.loop = loop;
-      setLoop((prev) => !prev);
+      audio.loop = !loop;
+      dispatch(setLoop(!loop));
     }
   };
   // Текущее состояние воспроизведения трека
@@ -30,24 +32,29 @@ const Bar = ({ track }: PlaylistTrack) => {
 
   const duration = audioRef.current?.duration || 0;
 
-  // Состояние для управления воспроизведением
-  const [isPlaying, setIsPlaying] = useState(false);
+  const isShaffled = useAppSelector((state) => state.playlist.isShaffled);
+  const loop = useAppSelector((state) => state.playlist.loop);
+
+  const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
+  const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
+  const dispatch = useAppDispatch();
 
   // Функция для воспроизведения и паузы
-  const togglePlay = () => {
+  const togglePlay = useCallback(() => {
     const audio = audioRef.current;
     if (isPlaying) {
       audio?.pause();
+      dispatch(setIsPlaying(false));
     } else {
       audio?.play();
+      dispatch(setIsPlaying(true));
     }
-    setIsPlaying((prev) => !prev);
-  };
+  }, [dispatch, isPlaying]);
 
-  const play = () => {
+  const play = useCallback(() => {
     audioRef.current?.play();
-    setIsPlaying(true);
-  };
+    dispatch(setIsPlaying(true));
+  }, [dispatch]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -61,18 +68,47 @@ const Bar = ({ track }: PlaylistTrack) => {
     return () => {
       audio?.removeEventListener("timeupdate", setTime);
     };
-  }, [track]);
+  }, [currentTrack, play]);
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
     }
-  }, [volume]);
+  });
 
   const handleTreck = () => {
     alert("Функция в разработке");
   };
 
+  const handleShuffled = () => {
+    if (isShaffled) {
+      dispatch(setIsShuffled(false));
+    } else {
+      dispatch(setIsShuffled(true));
+    }
+  };
+
+  const handleNext = () => {
+    dispatch(nextTrack());
+  };
+
+  const handlePrev = () => {
+    dispatch(prevTrack());
+  };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+
+    if (audio) {
+      audio.addEventListener("ended", handleNext);
+    }
+    return () => {
+      audio?.removeEventListener("ended", handleNext);
+    };
+  });
+  if (!currentTrack) {
+    return null;
+  }
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
@@ -93,12 +129,9 @@ const Bar = ({ track }: PlaylistTrack) => {
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>
             <div className={styles.playerControls}>
-              <div className={styles.playerBtnPrev}>
+              <div onClick={handlePrev} className={styles.playerBtnPrev}>
                 <svg className={styles.playerBtnPrevSvg}>
-                  <use
-                    onClick={handleTreck}
-                    xlinkHref="icon/sprite.svg#icon-prev"
-                  ></use>
+                  <use xlinkHref="icon/sprite.svg#icon-prev"></use>
                 </svg>
               </div>
               <div
@@ -113,12 +146,9 @@ const Bar = ({ track }: PlaylistTrack) => {
                   ></use>
                 </svg>
               </div>
-              <div className={styles.playerBtnNext}>
+              <div onClick={handleNext} className={styles.playerBtnNext}>
                 <svg className={styles.playerBtnNextSvg}>
-                  <use
-                    onClick={handleTreck}
-                    xlinkHref="icon/sprite.svg#icon-next"
-                  ></use>
+                  <use xlinkHref="icon/sprite.svg#icon-next"></use>
                 </svg>
               </div>
               <div
@@ -130,16 +160,16 @@ const Bar = ({ track }: PlaylistTrack) => {
                 )}
               >
                 <svg className={styles.playerBtnRepeatSvg}>
-                  <use
-                    xlinkHref={`icon/sprite.svg#${
-                      loop ? "icon-repeat-active" : "icon-repeat"
-                    }`}
-                  ></use>
+                  <use xlinkHref="icon/sprite.svg#icon-repeat"></use>
                 </svg>
               </div>
               <div
-                onClick={handleTreck}
-                className={classNames(styles.playerBtnShuffle, styles.btnIcon)}
+                onClick={handleShuffled}
+                className={classNames(
+                  styles.playerBtnShuffle,
+                  styles.btnIcon,
+                  isShaffled ? styles.active : null
+                )}
               >
                 <svg className={styles.playerBtnShuffleSvg}>
                   <use xlinkHref="icon/sprite.svg#icon-shuffle"></use>
@@ -156,12 +186,12 @@ const Bar = ({ track }: PlaylistTrack) => {
                 </div>
                 <div className={styles.trackPlayAuthor}>
                   <a className={styles.trackPlayAuthorLink} href="http://">
-                    {track.author}
+                    {currentTrack.author}
                   </a>
                 </div>
                 <div className={styles.trackPlayAlbum}>
                   <a className={styles.trackPlayAlbumLink} href="http://">
-                    {track.name}
+                    {currentTrack.name}
                   </a>
                 </div>
               </div>
@@ -203,7 +233,7 @@ const Bar = ({ track }: PlaylistTrack) => {
               <div className={classNames(styles.volumeProgress, styles._btn)}>
                 <audio
                   ref={audioRef}
-                  src={track.track_file}
+                  src={currentTrack.track_file}
                   onTimeUpdate={(e) =>
                     setCurrentTime(e.currentTarget.currentTime)
                   }

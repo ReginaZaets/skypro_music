@@ -156,15 +156,12 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 .playerBtnShuffleSvg {
   width: 19px;
   height: 12px;
-  fill: transparent;
-  stroke: #696969;
+  /* fill: transparent;
+  stroke: #696969; */
 }
 .playerTrackPlay {
   display: -webkit-box;
