@@ -46,12 +46,10 @@ const playListSlice = createSlice({
       const currentIndex = playlist.findIndex(
         (track) => track.id === state.currentTrack?.id
       );
-      const nextIndex = currentIndex + 1;
-      //условие: если трек последний в плейлисте, то пропадает бар, если использовать >= то плейлист играет с 1 песни
-      if (nextIndex > playlist.length) {
-        state.currentTrack = playlist[0];
-      } else {
-        state.currentTrack = playlist[nextIndex];
+      
+      const nextIndex = playlist[currentIndex + 1];
+      if (nextIndex) {
+        state.currentTrack = nextIndex;
       }
     },
     prevTrack: (state) => {
@@ -63,13 +61,10 @@ const playListSlice = createSlice({
       const currentIndex = playlist.findIndex(
         (track) => track.id === state.currentTrack?.id
       );
-      //вычисляем предыдущий трек
-      const prevIndex = currentIndex - 1;
-      //условие: если трек первый в плейлисте, то пропадает бар
-      if (prevIndex < playlist.length) {
-        state.currentTrack = playlist[prevIndex];
-      } else {
-        state.currentTrack = playlist[0];
+      // не исчезает бар, если трек последний, ничего не происходит
+      const prevIndex = playlist[currentIndex - 1];
+      if (prevIndex) {
+        state.currentTrack = prevIndex;
       }
     },
     setIsPlaying: (state, action: PayloadAction<boolean>) => {

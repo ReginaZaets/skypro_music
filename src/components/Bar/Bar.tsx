@@ -186,12 +186,12 @@ const Bar = () => {
                 </div>
                 <div className={styles.trackPlayAuthor}>
                   <a className={styles.trackPlayAuthorLink} href="http://">
-                    {currentTrack.author}
+                  {currentTrack.name}
                   </a>
                 </div>
                 <div className={styles.trackPlayAlbum}>
                   <a className={styles.trackPlayAlbumLink} href="http://">
-                    {currentTrack.name}
+                    {currentTrack.author}
                   </a>
                 </div>
               </div>
