@@ -1,19 +1,18 @@
 import Header from "@components/Header/Header";
 import styles from "./MainBlock.module.css";
 import Sidebar from "@components/Sidebar/Sidebar";
-import Main from "@components/CenterBlock/CenterBlock";
 import Bar from "@components/Bar/Bar";
 import { TrackType } from "../../lib/type";
-type Props = {
-  tracks: TrackType[];
-};
-const MainBlock = ({ tracks }: Props) => {
+import { tracksApi } from "../../Api/tracksApi";
+import CenterBlock from "@components/CenterBlock/CenterBlock";
+
+const MainBlock = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <main className={styles.main}>
           <Header />
-          <Main tracks={tracks} />
+          <CenterBlock />
           <Sidebar />
         </main>
         <Bar />

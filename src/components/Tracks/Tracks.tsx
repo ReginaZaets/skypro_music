@@ -6,16 +6,16 @@ import styles from "./Tracks.module.css";
 import { setCurrentTrack } from "../../store/features/playListSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 type Props = {
-  tracks: TrackType[];
+  allTracks: TrackType[];
   track: TrackType;
 };
 
-const Tracks = ({ tracks, track }: Props) => {
+const Tracks = ({ allTracks, track }: Props) => {
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    dispatch(setCurrentTrack({ currentTrack: track, currentPlaylist: tracks }));
+    dispatch(setCurrentTrack({ currentTrack: track, currentPlaylist: allTracks }));
   };
   const { name, author, album, duration_in_seconds } = track;
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);

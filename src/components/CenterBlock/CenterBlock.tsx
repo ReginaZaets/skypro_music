@@ -8,24 +8,17 @@ import { TrackType } from "../../lib/type";
 import Sorting from "@components/Sorting/Sorting";
 import { FilterData } from "@components/Filter/FilterData";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/store";
 
-type PlayTrack = {
-  tracks: TrackType[];
-};
-
-type Track = {
-  author: string;
-  genre: string;
-};
-
-const Main = ({ tracks }: PlayTrack) => {
+const CenterBlock = () => {
   const [allTracks, setAllTracks] = useState<TrackType[]>([]);
-
+  const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     tracksApi()
-      .then((response) => setAllTracks(response))
-      .catch((err) => console.log(err.message));
+      .then((response: TrackType[]) => setAllTracks(response))
+      .catch((err) => {
+        console.log(err.message);
+        setError("ошибка загрузки треков");
+      });
   }, []);
   // получаем уникальных авторов без повторений
   const uniqueAuthors = Array.from(
@@ -33,7 +26,9 @@ const Main = ({ tracks }: PlayTrack) => {
   );
   FilterData[0].list = uniqueAuthors;
   //получаем уникальные жанры без повторений
-  const uniqueGenre = Array.from(new Set(allTracks.map((track) => track.genre)));
+  const uniqueGenre = Array.from(
+    new Set(allTracks.map((track) => track.genre))
+  );
   FilterData[2].list = uniqueGenre;
 
   return (
@@ -67,13 +62,10 @@ const Main = ({ tracks }: PlayTrack) => {
             </svg>
           </div>
         </div>
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <div className={styles.playList}>
           {allTracks.map((value) => (
-            <Tracks
-              key={value.id}
-              track={value}
-              tracks={tracks}
-            />
+            <Tracks key={value.id} track={value} allTracks={allTracks} />
           ))}
         </div>
       </div>
@@ -81,4 +73,4 @@ const Main = ({ tracks }: PlayTrack) => {
   );
 };
 
-export default Main;
+export default CenterBlock;
