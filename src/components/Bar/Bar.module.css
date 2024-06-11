@@ -156,15 +156,12 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 .playerBtnShuffleSvg {
   width: 19px;
   height: 12px;
-  fill: transparent;
-  stroke: #696969;
+  /* fill: transparent;
+  stroke: #696969; */
 }
 .playerTrackPlay {
   display: -webkit-box;
@@ -174,9 +171,11 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
+  width: max-content;
 }
 .trackPlayContain {
-  width: auto;
+  width: max-content;
+  /* width: auto; */
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: auto 1fr;
@@ -216,7 +215,8 @@
   grid-row: 1;
   grid-column: 2;
   grid-area: author;
-  min-width: 49px;
+  /* min-width: 49px; */
+  width: max-content;
 }
 .trackPlayAuthorLink {
   font-style: normal;
@@ -230,7 +230,7 @@
   grid-row: 2;
   grid-column: 2;
   grid-area: album;
-  min-width: 49px;
+  width: max-content;
 }
 .trackPlayAlbumLink {
   font-style: normal;
@@ -250,7 +250,7 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin-left: 26%;
+  margin-left: 10%;
 }
 .trackPlayLike {
   padding: 5px;
