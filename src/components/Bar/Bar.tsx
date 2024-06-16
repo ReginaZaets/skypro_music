@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styles from "./Bar.module.css";
 import classNames from "classnames";
 import PlayerProgress from "@components/PlayerProgress/PlayerProgress";
@@ -19,7 +25,6 @@ const Bar = () => {
 
   const [volume, setVolume] = useState(0.5);
 
- 
   const toggleLoop = () => {
     const audio = audioRef.current;
     if (audio) {
@@ -186,7 +191,7 @@ const Bar = () => {
                 </div>
                 <div className={styles.trackPlayAuthor}>
                   <a className={styles.trackPlayAuthorLink} href="http://">
-                  {currentTrack.name}
+                    {currentTrack.name}
                   </a>
                 </div>
                 <div className={styles.trackPlayAlbum}>
