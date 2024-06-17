@@ -6,16 +6,6 @@ import { FilterData, order } from "@components/Filter/FilterData";
 import { TrackType } from "../../lib/type";
 import { useAppSelector } from "../../hooks/store";
 
-// type PropsFilter = {
-//   title: string;
-//   // list: string[];
-//   value: string;
-// };
-
-// type Props = {
-//   FilterData: Array<PropsFilter>;
-// };
-
 const Sorting = ({ allTracks }: { allTracks: TrackType[] }) => {
   const [filterValue, setFilterValue] = useState<string | null>(null);
 

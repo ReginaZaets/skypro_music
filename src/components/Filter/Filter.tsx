@@ -51,14 +51,8 @@ const Filter = ({ allTracks, title, list, onClick, value, isOpen }: Props) => {
     );
   };
   useEffect(() => {
-    setFilterNumber(
-      value === "order"
-        ? orderList === "Сначала новые" || orderList === "Сначала старые"
-          ? 1
-          : 0
-        : list.length
-    );
-  }, [list, orderList, value]);
+    if (value !== "order") setFilterNumber(list.length);
+  }, [list, value]);
   filterList();
   return (
     <div>
@@ -68,7 +62,9 @@ const Filter = ({ allTracks, title, list, onClick, value, isOpen }: Props) => {
         ) : null}
         <button
           onClick={() => onClick(value)}
-          className={classNames(styles.filterButton, styles.btnText)}
+          className={classNames(styles.filterButton, styles.btnText, {
+            [styles.activeFilter]: isOpen,
+          })}
         >
           {title}
         </button>

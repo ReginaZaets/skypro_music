@@ -1,6 +1,7 @@
 "use client";
 
 import React, {
+  ChangeEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -101,6 +102,15 @@ const Bar = () => {
     dispatch(prevTrack());
   };
 
+  const handlePlayerProgress = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (audioRef.current) {
+        audioRef.current.currentTime = Number(e.target.value);
+      }
+    },
+    []
+  );
+
   useEffect(() => {
     const audio = audioRef.current;
 
@@ -125,11 +135,7 @@ const Bar = () => {
           max={duration}
           value={currentTime}
           step={0.01}
-          onChange={(e) => {
-            if (audioRef.current) {
-              audioRef.current.currentTime = Number(e.target.value);
-            }
-          }}
+          onChange={handlePlayerProgress}
         />
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>

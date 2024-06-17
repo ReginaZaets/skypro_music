@@ -15,29 +15,24 @@ import { setInitialPlaylist } from "../../store/features/playListSlice";
 const CenterBlock = () => {
   const [allTracks, setAllTracks] = useState<TrackType[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const dispatch = useAppDispatch();
-  const filterTracks = useAppSelector((state) => state.playlist.filteredPlaylist);
+  const filterTracks = useAppSelector(
+    (state) => state.playlist.filteredPlaylist
+  );
   useEffect(() => {
     tracksApi()
       .then((response: TrackType[]) => {
         setAllTracks(response);
-        dispatch(setInitialPlaylist(response ));
+        dispatch(setInitialPlaylist(response));
+        setIsLoading(true);
       })
       .catch((err) => {
         console.log(err.message);
         setError("ошибка загрузки треков");
       });
   }, [dispatch]);
-  // // получаем уникальных авторов без повторений
-  // const uniqueAuthors = Array.from(
-  //   new Set(allTracks.map((track) => track.author))
-  // );
-  // FilterData[0].list = uniqueAuthors;
-  // //получаем уникальные жанры без повторений
-  // const uniqueGenre = Array.from(
-  //   new Set(allTracks.map((track) => track.genre))
-  // );
-  // FilterData[2].list = uniqueGenre;
 
   return (
     <div className={styles.mainCenterblock}>
@@ -61,11 +56,14 @@ const CenterBlock = () => {
           </div>
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <div className={styles.playList}>
-          {filterTracks.map((value) => (
-            <Tracks key={value.id} track={value} allTracks={allTracks} />
-          ))}
-        </div>
+        {filterTracks.length === 0 && isLoading && "Ничего не найдено"}
+        {isLoading && (
+          <div className={styles.playList}>
+            {filterTracks.map((value) => (
+              <Tracks key={value.id} track={value} allTracks={allTracks} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

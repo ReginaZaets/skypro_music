@@ -13,16 +13,18 @@
   margin-right: 10px;
   z-index: 0;
 }
+
+.activeFilter {
+  border-color: #ad61ff;
+  color: #ad61ff;
+  cursor: pointer;
+}
 .btnText:hover {
   border-color: #b672ff;
   color: #b672ff;
   cursor: pointer;
 }
-.btnText:focus {
-  border-color: #ad61ff;
-  color: #ad61ff;
-  cursor: pointer;
-}
+
 .list {
   min-width: 248px;
   position: absolute;
@@ -51,11 +53,13 @@
   height: 26px;
   width: 26px;
   line-height: 13px;
+  font-size: 13px;
   padding: 6px;
   transform: translate(-30%, -30%);
   text-align: center;
   background-color: #ad61ff;
-  font-family: "Montserrat";
+  /* font-family: "StratosSkyeng"; */
+  font-family: "StratosSkyeng", Sans-serif;
 }
 .listText {
   gap: 10px;
