@@ -6,7 +6,6 @@ import Tracks from "@components/Tracks/Tracks";
 import { tracksApi } from "../../Api/tracksApi";
 import { TrackType } from "../../lib/type";
 import Sorting from "@components/Sorting/Sorting";
-import { FilterData } from "@components/Filter/FilterData";
 import { useEffect, useState } from "react";
 import Search from "../../Search/Search";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
@@ -21,6 +20,7 @@ const CenterBlock = () => {
   const filterTracks = useAppSelector(
     (state) => state.playlist.filteredPlaylist
   );
+
   useEffect(() => {
     tracksApi()
       .then((response: TrackType[]) => {

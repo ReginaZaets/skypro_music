@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useAppDispatch } from "../hooks/store";
-import { setFilters } from "../store/features/playListSlice";
+import { resetFilters, setFilters } from "../store/features/playListSlice";
 import styles from "./Search.module.css";
 
 const Search = () => {
@@ -10,16 +10,14 @@ const Search = () => {
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const search = event.target.value;
-    console.log(search);
     setSearchResult(search);
-    dispatch(setFilters({ searchString: search }));
-  };
-
-  const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      // handleSearch(event);
+    if (search.trim() === "") {
+      dispatch(resetFilters());
+    } else {
+      dispatch(setFilters({ searchString: search }));
     }
   };
+
   return (
     <div className={styles.centerblockSearch}>
       <svg className={styles.searchSvg}>
@@ -32,7 +30,6 @@ const Search = () => {
         name="search"
         value={searchResult}
         onChange={handleSearch}
-        onKeyDown={handleEnter}
       />
     </div>
   );

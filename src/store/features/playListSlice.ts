@@ -146,6 +146,15 @@ const playListSlice = createSlice({
       }
       state.filteredPlaylist = filterTracks;
     },
+    resetFilters: (state) => {
+      state.filterOptions = {
+        author: [],
+        genre: [],
+        order: "По умолчанию",
+        searchString: "",
+      };
+      state.filteredPlaylist = state.initialPlaylist;
+    },
   },
 });
 export const {
@@ -157,6 +166,7 @@ export const {
   setLoop,
   setFilters,
   setInitialPlaylist,
+  resetFilters,
 } = playListSlice.actions;
 
 export const playlistReducer = playListSlice.reducer;
