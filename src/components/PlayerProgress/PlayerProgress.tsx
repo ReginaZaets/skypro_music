@@ -1,13 +1,14 @@
+import React, { ChangeEvent } from "react";
 import styles from "./PlayerProgress.module.css";
 
 type Props = {
   max: number;
   value: number;
   step: number;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function PlayerProgress({ max, value, step, onChange }: Props) {
+const PlayerProgress = React.memo(({ max, value, step, onChange }: Props) => {
   return (
     <input
       className={styles.styledProgressInput} // Применение стилей к ползунку
@@ -19,4 +20,6 @@ export default function PlayerProgress({ max, value, step, onChange }: Props) {
       onChange={onChange} // Обработчик события изменения
     />
   );
-}
+});
+PlayerProgress.displayName = "PlayerProgress";
+export default PlayerProgress;

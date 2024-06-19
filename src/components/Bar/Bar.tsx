@@ -1,6 +1,13 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styles from "./Bar.module.css";
 import classNames from "classnames";
 import PlayerProgress from "@components/PlayerProgress/PlayerProgress";
@@ -19,7 +26,6 @@ const Bar = () => {
 
   const [volume, setVolume] = useState(0.5);
 
- 
   const toggleLoop = () => {
     const audio = audioRef.current;
     if (audio) {
@@ -96,6 +102,15 @@ const Bar = () => {
     dispatch(prevTrack());
   };
 
+  const handlePlayerProgress = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (audioRef.current) {
+        audioRef.current.currentTime = Number(e.target.value);
+      }
+    },
+    []
+  );
+
   useEffect(() => {
     const audio = audioRef.current;
 
@@ -120,11 +135,7 @@ const Bar = () => {
           max={duration}
           value={currentTime}
           step={0.01}
-          onChange={(e) => {
-            if (audioRef.current) {
-              audioRef.current.currentTime = Number(e.target.value);
-            }
-          }}
+          onChange={handlePlayerProgress}
         />
         <div className={styles.barPlayerBlock}>
           <div className={styles.barPlayer}>
@@ -186,7 +197,7 @@ const Bar = () => {
                 </div>
                 <div className={styles.trackPlayAuthor}>
                   <a className={styles.trackPlayAuthorLink} href="http://">
-                  {currentTrack.name}
+                    {currentTrack.name}
                   </a>
                 </div>
                 <div className={styles.trackPlayAlbum}>

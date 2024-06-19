@@ -6,45 +6,38 @@ import Tracks from "@components/Tracks/Tracks";
 import { tracksApi } from "../../Api/tracksApi";
 import { TrackType } from "../../lib/type";
 import Sorting from "@components/Sorting/Sorting";
-import { FilterData } from "@components/Filter/FilterData";
 import { useEffect, useState } from "react";
+import Search from "../../Search/Search";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { setInitialPlaylist } from "../../store/features/playListSlice";
 
 const CenterBlock = () => {
   const [allTracks, setAllTracks] = useState<TrackType[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+  const filterTracks = useAppSelector(
+    (state) => state.playlist.filteredPlaylist
+  );
+
   useEffect(() => {
     tracksApi()
-      .then((response: TrackType[]) => setAllTracks(response))
+      .then((response: TrackType[]) => {
+        setAllTracks(response);
+        dispatch(setInitialPlaylist(response));
+        setIsLoading(true);
+      })
       .catch((err) => {
         console.log(err.message);
         setError("ошибка загрузки треков");
       });
-  }, []);
-  // получаем уникальных авторов без повторений
-  const uniqueAuthors = Array.from(
-    new Set(allTracks.map((track) => track.author))
-  );
-  FilterData[0].list = uniqueAuthors;
-  //получаем уникальные жанры без повторений
-  const uniqueGenre = Array.from(
-    new Set(allTracks.map((track) => track.genre))
-  );
-  FilterData[2].list = uniqueGenre;
+  }, [dispatch]);
 
   return (
     <div className={styles.mainCenterblock}>
-      <div className={styles.centerblockSearch}>
-        <svg className={styles.searchSvg}>
-          <use xlinkHref="icon/sprite.svg#icon-search"></use>
-        </svg>
-        <input
-          className={styles.searchText}
-          type="search"
-          placeholder="Поиск"
-          name="search"
-        />
-      </div>
-      <Sorting FilterData={FilterData} />
+      <Search />
+      <Sorting allTracks={allTracks} />
       <div className={styles.centerblockContent}>
         <div className={styles.contentTitle}>
           <div className={classNames(styles.playlistTitleCol, styles.col01)}>
@@ -63,11 +56,14 @@ const CenterBlock = () => {
           </div>
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <div className={styles.playList}>
-          {allTracks.map((value) => (
-            <Tracks key={value.id} track={value} allTracks={allTracks} />
-          ))}
-        </div>
+        {filterTracks.length === 0 && isLoading && "Ничего не найдено"}
+        {isLoading && (
+          <div className={styles.playList}>
+            {filterTracks.map((value) => (
+              <Tracks key={value.id} track={value} allTracks={allTracks} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
