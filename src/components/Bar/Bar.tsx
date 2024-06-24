@@ -4,7 +4,6 @@ import React, {
   ChangeEvent,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
@@ -46,7 +45,7 @@ const Bar = () => {
   const dispatch = useAppDispatch();
 
   // Функция для воспроизведения и паузы
-  const togglePlay = useCallback(() => {
+  const togglePlay = () => {
     const audio = audioRef.current;
     if (isPlaying) {
       audio?.pause();
@@ -55,7 +54,7 @@ const Bar = () => {
       audio?.play();
       dispatch(setIsPlaying(true));
     }
-  }, [dispatch, isPlaying]);
+  };
 
   const play = useCallback(() => {
     audioRef.current?.play();

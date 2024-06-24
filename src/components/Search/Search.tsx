@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { useAppDispatch } from "../hooks/store";
-import { resetFilters, setFilters } from "../store/features/playListSlice";
+import { useAppDispatch } from "../../hooks/store";
+import { resetFilters, setFilters } from "../../store/features/playListSlice";
 import styles from "./Search.module.css";
 
 const Search = () => {

@@ -1,16 +1,24 @@
 import Header from "@components/Header/Header";
-import styles from "./MainBlock.module.css";
-import Sidebar from "@components/Sidebar/Sidebar";
+import styles from "./layout.module.css";
 import Bar from "@components/Bar/Bar";
-import CenterBlock from "@components/CenterBlock/CenterBlock";
+import Sidebar from "@components/Sidebar/Sidebar";
+import Search from "../../components/Search/Search";
 
-
-const MainBlock = () => {
+export default function TracksLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <main className={styles.main}>
           <Header />
+
+          <div className={styles.mainNav}>
+            <Search />
+            {children}
+          </div>
           <Sidebar />
         </main>
         <Bar />
@@ -18,6 +26,4 @@ const MainBlock = () => {
       </div>
     </div>
   );
-};
-
-export default MainBlock;
+}
