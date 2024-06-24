@@ -33,7 +33,7 @@ const CenterBlock = ({ allTracks, error, isLoading }: CenterBlockProps) => {
           </div>
           <div className={classNames(styles.playlistTitleCol, styles.col04)}>
             <svg className={styles.playlistTitleSvg}>
-              <use xlinkHref="icon/sprite.svg#icon-watch"></use>
+              <use xlinkHref="/icon/sprite.svg#icon-watch"></use>
             </svg>
           </div>
         </div>

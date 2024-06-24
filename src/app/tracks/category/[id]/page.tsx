@@ -17,11 +17,23 @@ const Category = ({ params }: CategoryProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const allTracks = useAppSelector((state) => state.playlist.filteredPlaylist);
   const dispatch = useAppDispatch();
-
+  let namePlaylist = "";
+  switch (params.id) {
+    case "1":
+      namePlaylist = "Плейлист дня";
+      break;
+    case "2":
+      namePlaylist = "100 танцевальных хитов";
+      break;
+    case "3":
+      namePlaylist = "Инди-заряд";
+      break;
+    default:
+      break;
+  }
   useEffect(() => {
     playlistCategory(params.id)
       .then((response) => {
-        console.log(response.items);
         dispatch(setInitialPlaylist(response.items));
         setIsLoading(true);
       })
@@ -30,10 +42,9 @@ const Category = ({ params }: CategoryProps) => {
         setError("ошибка загрузки треков");
       });
   }, [params.id, dispatch]);
-
   return (
     <>
-      <h2 className={styles.centerblockH2}>Треки</h2>
+      <h2 className={styles.centerblockH2}>{namePlaylist}</h2>
       <CenterBlock allTracks={allTracks} error={error} isLoading={isLoading} />
     </>
   );

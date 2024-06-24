@@ -16,7 +16,6 @@ const MainTracksPage = () => {
   useEffect(() => {
     tracksApi()
       .then((response: TrackType[]) => {
-        console.log(response);
         dispatch(setInitialPlaylist(response));
         setIsLoading(true);
       })

@@ -141,7 +141,7 @@ const Bar = () => {
             <div className={styles.playerControls}>
               <div onClick={handlePrev} className={styles.playerBtnPrev}>
                 <svg className={styles.playerBtnPrevSvg}>
-                  <use xlinkHref="icon/sprite.svg#icon-prev"></use>
+                  <use xlinkHref="/icon/sprite.svg#icon-prev"></use>
                 </svg>
               </div>
               <div
@@ -150,7 +150,7 @@ const Bar = () => {
               >
                 <svg className={styles.playerBtnPlaySvg}>
                   <use
-                    xlinkHref={`icon/sprite.svg#${
+                    xlinkHref={`/icon/sprite.svg#${
                       isPlaying ? "icon-pause" : "icon-play"
                     }`}
                   ></use>
@@ -158,7 +158,7 @@ const Bar = () => {
               </div>
               <div onClick={handleNext} className={styles.playerBtnNext}>
                 <svg className={styles.playerBtnNextSvg}>
-                  <use xlinkHref="icon/sprite.svg#icon-next"></use>
+                  <use xlinkHref="/icon/sprite.svg#icon-next"></use>
                 </svg>
               </div>
               <div
@@ -170,7 +170,7 @@ const Bar = () => {
                 )}
               >
                 <svg className={styles.playerBtnRepeatSvg}>
-                  <use xlinkHref="icon/sprite.svg#icon-repeat"></use>
+                  <use xlinkHref="/icon/sprite.svg#icon-repeat"></use>
                 </svg>
               </div>
               <div
@@ -182,7 +182,7 @@ const Bar = () => {
                 )}
               >
                 <svg className={styles.playerBtnShuffleSvg}>
-                  <use xlinkHref="icon/sprite.svg#icon-shuffle"></use>
+                  <use xlinkHref="/icon/sprite.svg#icon-shuffle"></use>
                 </svg>
               </div>
             </div>
@@ -191,7 +191,7 @@ const Bar = () => {
               <div className={styles.trackPlayContain}>
                 <div className={styles.trackPlayImage}>
                   <svg className={styles.trackPlaySvg}>
-                    <use xlinkHref="icon/sprite.svg#icon-note"></use>
+                    <use xlinkHref="/icon/sprite.svg#icon-note"></use>
                   </svg>
                 </div>
                 <div className={styles.trackPlayAuthor}>
@@ -213,7 +213,7 @@ const Bar = () => {
                   <svg className={styles.trackPlayLikeSvg}>
                     <use
                       onClick={handleTreck}
-                      xlinkHref="icon/sprite.svg#icon-like"
+                      xlinkHref="/icon/sprite.svg#icon-like"
                     ></use>
                   </svg>
                 </div>
@@ -226,7 +226,7 @@ const Bar = () => {
                   <svg className={styles.trackPlayDislikeSvg}>
                     <use
                       onClick={handleTreck}
-                      xlinkHref="icon/sprite.svg#icon-dislike"
+                      xlinkHref="/icon/sprite.svg#icon-dislike"
                     ></use>
                   </svg>
                 </div>
@@ -237,7 +237,7 @@ const Bar = () => {
             <div className={styles.volumeContent}>
               <div className={styles.volumeImage}>
                 <svg className={styles.volumeSvg}>
-                  <use xlinkHref="icon/sprite.svg#icon-volume"></use>
+                  <use xlinkHref="/icon/sprite.svg#icon-volume"></use>
                 </svg>
               </div>
               <div className={classNames(styles.volumeProgress, styles._btn)}>

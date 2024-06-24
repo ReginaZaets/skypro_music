@@ -21,7 +21,7 @@ const Search = () => {
   return (
     <div className={styles.centerblockSearch}>
       <svg className={styles.searchSvg}>
-        <use xlinkHref="icon/sprite.svg#icon-search"></use>
+        <use xlinkHref="/icon/sprite.svg#icon-search"></use>
       </svg>
       <input
         className={styles.searchText}
