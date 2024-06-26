@@ -30,6 +30,7 @@ const Search = () => {
         name="search"
         value={searchResult}
         onChange={handleSearch}
+        data-testid ="search"
       />
     </div>
   );
