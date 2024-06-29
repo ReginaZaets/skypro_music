@@ -145,6 +145,7 @@ const Bar = () => {
                 </svg>
               </div>
               <div
+                data-testid="toggleplay"
                 onClick={togglePlay}
                 className={classNames(styles.playerBtnPlay, styles._btn)}
               >
@@ -247,6 +248,7 @@ const Bar = () => {
                   onTimeUpdate={(e) =>
                     setCurrentTime(e.currentTarget.currentTime)
                   }
+                  data-testid="audio-element"
                 ></audio>
                 <input
                   className={classNames(styles.volumeProgressLine, styles._btn)}

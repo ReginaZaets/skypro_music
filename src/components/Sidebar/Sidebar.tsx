@@ -5,9 +5,10 @@ import Link from "next/link";
 
 
 const Sidebar = () => {
+  //вынести в юзер
   return (
     <div className={styles.mainSidebar}>
-      <div className={styles.sidebarPersonal}>
+      <div className={styles.sidebarPersonal}>  
         <p className={styles.sidebarPersonalName}>Sergey.Ivanov</p>
         <div className={styles.sidebarIcon}>
           <svg>
