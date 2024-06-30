@@ -21,7 +21,7 @@ const Tracks = ({ allTracks, track }: Props) => {
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
   const isCurrentTrack = currentTrack?.id === track.id;
   return (
-    <div onClick={handleClick} className={styles.contentPlaylist}>
+    <div data-testid ="toggletrack" onClick={handleClick} className={styles.contentPlaylist}>
       <div className={styles.playlistItem}>
         <div className={styles.playlistTrack}>
           <div className={styles.trackTitle}>
@@ -33,7 +33,7 @@ const Tracks = ({ allTracks, track }: Props) => {
                 })}
               >
                 <use
-                  xlinkHref={`icon/sprite.svg#${
+                  xlinkHref={`/icon/sprite.svg#${
                     isCurrentTrack ? "icon-isplaying" : "icon-note"
                   }`}
                 ></use>
@@ -58,7 +58,7 @@ const Tracks = ({ allTracks, track }: Props) => {
           </div>
           <div>
             <svg className={styles.trackTimeSvg}>
-              <use xlinkHref="icon/sprite.svg#icon-like"></use>
+              <use xlinkHref="/icon/sprite.svg#icon-like"></use>
             </svg>
           </div>
           <div>

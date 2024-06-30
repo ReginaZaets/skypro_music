@@ -32,7 +32,6 @@ const Sorting = ({ allTracks }: { allTracks: TrackType[] }) => {
 
   return (
     <div>
-      <h2 className={styles.centerblockH2}>Треки</h2>
       <div className={styles.centerblockFilter}>
         <div className={styles.filterTitle}>Искать по:</div>
         {FilterData.map((item, index) => {

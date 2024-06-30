@@ -1,9 +1,11 @@
+'use client'
 import React from "react";
 import Image from "next/image";
 import styles from "./Signup.module.css";
 import Link from "next/link";
 
 const Signup = () => {
+  
   return (
     <div className={styles.wrapper}>
       <div className={styles.containerSignup}>

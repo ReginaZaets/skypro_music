@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { useAppDispatch } from "../hooks/store";
-import { resetFilters, setFilters } from "../store/features/playListSlice";
+import { useAppDispatch } from "../../hooks/store";
+import { resetFilters, setFilters } from "../../store/features/playListSlice";
 import styles from "./Search.module.css";
 
 const Search = () => {
@@ -21,7 +21,7 @@ const Search = () => {
   return (
     <div className={styles.centerblockSearch}>
       <svg className={styles.searchSvg}>
-        <use xlinkHref="icon/sprite.svg#icon-search"></use>
+        <use xlinkHref="/icon/sprite.svg#icon-search"></use>
       </svg>
       <input
         className={styles.searchText}
@@ -30,6 +30,7 @@ const Search = () => {
         name="search"
         value={searchResult}
         onChange={handleSearch}
+        data-testid ="search"
       />
     </div>
   );

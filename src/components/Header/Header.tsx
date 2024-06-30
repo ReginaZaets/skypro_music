@@ -13,15 +13,17 @@ const Header = () => {
   return (
     <nav className={styles.mainNavNav}>
       <div className={styles.logoNav}>
-        <Image
-          className={styles.logoImage}
-          src="/images/logo.png"
-          alt="imageLogo"
-          width={256}
-          height={75}
-        />
+        <Link href="/">
+          <Image
+            className={styles.logoImage}
+            src="/images/logo.png"
+            alt="imageLogo"
+            width={256}
+            height={75}
+          />
+        </Link>
       </div>
-      <div className={styles.navBurger} onClick={onClickBurger}>
+      <div data-testid="burger" className={styles.navBurger} onClick={onClickBurger}>
         <span className={styles.burgerLine}></span>
         <span className={styles.burgerLine}></span>
         <span className={styles.burgerLine}></span>
