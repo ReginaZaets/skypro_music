@@ -48,10 +48,10 @@ const track2 = {
 };
 
 describe("Bar component", () => {
-
   const allTracks = [track1, track2];
 
   test("should play the next track after the current track ends", async () => {
+    window.HTMLMediaElement.prototype.play = () => Promise.resolve();
     render(
       <ReduxProvider>
         <Tracks allTracks={allTracks} track={track1} />
@@ -61,7 +61,7 @@ describe("Bar component", () => {
     //нажимаем на трек, чтобы вызвать бар и начать проигрывание трека
     const toggleTrack = screen.getByTestId("toggletrack");
     fireEvent.click(toggleTrack);
-  
+
     const toggleNextTrack = screen.getByTestId("nextTrack");
     fireEvent.click(toggleNextTrack);
 
@@ -69,7 +69,7 @@ describe("Bar component", () => {
       const tracks = track2;
       expect(tracks).not.toBeNull();
       if (tracks) expect(tracks.id).toBe(9);
-      if(tracks) expect(tracks.name).toBe("Open Sea epic")
+      if (tracks) expect(tracks.name).toBe("Open Sea epic");
     });
   });
 });

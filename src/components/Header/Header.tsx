@@ -23,7 +23,7 @@ const Header = () => {
           />
         </Link>
       </div>
-      <div className={styles.navBurger} onClick={onClickBurger}>
+      <div data-testid="burger" className={styles.navBurger} onClick={onClickBurger}>
         <span className={styles.burgerLine}></span>
         <span className={styles.burgerLine}></span>
         <span className={styles.burgerLine}></span>
