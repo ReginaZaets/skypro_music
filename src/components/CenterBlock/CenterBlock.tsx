@@ -3,41 +3,23 @@
 import styles from "./CenterBlock.module.css";
 import classNames from "classnames";
 import Tracks from "@components/Tracks/Tracks";
-import { tracksApi } from "../../Api/tracksApi";
 import { TrackType } from "../../lib/type";
-import Sorting from "@components/Sorting/Sorting";
-import { useEffect, useState } from "react";
-import Search from "../../Search/Search";
-import { useAppDispatch, useAppSelector } from "../../hooks/store";
-import { setInitialPlaylist } from "../../store/features/playListSlice";
 
-const CenterBlock = () => {
-  const [allTracks, setAllTracks] = useState<TrackType[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+import { useAppSelector } from "../../hooks/store";
+type CenterBlockProps = {
+  allTracks: TrackType[];
+  error: string | null;
+  isLoading: boolean;
+};
+const CenterBlock = ({ allTracks, error, isLoading }: CenterBlockProps) => {
 
-  const dispatch = useAppDispatch();
   const filterTracks = useAppSelector(
     (state) => state.playlist.filteredPlaylist
   );
 
-  useEffect(() => {
-    tracksApi()
-      .then((response: TrackType[]) => {
-        setAllTracks(response);
-        dispatch(setInitialPlaylist(response));
-        setIsLoading(true);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setError("ошибка загрузки треков");
-      });
-  }, [dispatch]);
-
   return (
     <div className={styles.mainCenterblock}>
-      <Search />
-      <Sorting allTracks={allTracks} />
+   
       <div className={styles.centerblockContent}>
         <div className={styles.contentTitle}>
           <div className={classNames(styles.playlistTitleCol, styles.col01)}>
@@ -51,7 +33,7 @@ const CenterBlock = () => {
           </div>
           <div className={classNames(styles.playlistTitleCol, styles.col04)}>
             <svg className={styles.playlistTitleSvg}>
-              <use xlinkHref="icon/sprite.svg#icon-watch"></use>
+              <use xlinkHref="/icon/sprite.svg#icon-watch"></use>
             </svg>
           </div>
         </div>

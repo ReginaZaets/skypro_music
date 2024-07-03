@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { playlistReducer } from "./features/playListSlice";
+import { authReducer } from "./features/authSlice";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   playlist: playlistReducer,
+  user: authReducer,
 });
 
 export const setupStore = () => {
