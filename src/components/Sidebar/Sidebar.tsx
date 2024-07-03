@@ -2,20 +2,14 @@ import React from "react";
 import Image from "next/image";
 import styles from "./Sidebar.module.css";
 import Link from "next/link";
+import User from "@components/User/User";
 
 
 const Sidebar = () => {
-  //вынести в юзер
+  
   return (
     <div className={styles.mainSidebar}>
-      <div className={styles.sidebarPersonal}>  
-        <p className={styles.sidebarPersonalName}>Sergey.Ivanov</p>
-        <div className={styles.sidebarIcon}>
-          <svg>
-            <use xlinkHref="/icon/sprite.svg#logout"></use>
-          </svg>
-        </div>
-      </div>
+      <User/>
       <div className={styles.sidebarBlock}>
         <div className={styles.sidebarList}>
           <div className={styles.sidebarItem}>

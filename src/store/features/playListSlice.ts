@@ -49,6 +49,12 @@ const playListSlice = createSlice({
   name: "playlist",
   initialState,
   reducers: {
+    setLikeTrack: (state, action: PayloadAction<TrackType>) => {
+      state.likedTracks.push(action.payload);
+    },
+    setDislikeTrack: (state, action: PayloadAction<number>) => {
+      state.likedTracks = state.likedTracks.filter((track) => track.id !== action.payload);
+    },
     setInitialPlaylist: (state, action: PayloadAction<TrackType[]>) => {
       state.filteredPlaylist = action.payload;
       state.initialPlaylist = action.payload;
@@ -170,7 +176,9 @@ const playListSlice = createSlice({
       state.likedTracks.push(action.payload);
     },
     deleteTrack: (state, action: PayloadAction<TrackType>) => {
-      state.likedTracks = state.likedTracks.filter((el)=>el.id !== action.payload.id)
+      state.likedTracks = state.likedTracks.filter(
+        (el) => el.id !== action.payload.id
+      );
     },
   },
   extraReducers(builder) {
@@ -192,6 +200,8 @@ export const {
   setFilters,
   setInitialPlaylist,
   resetFilters,
+  setLikeTrack,
+  setDislikeTrack,
 } = playListSlice.actions;
 
 export const playlistReducer = playListSlice.reducer;

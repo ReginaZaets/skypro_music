@@ -2,7 +2,7 @@
 import CenterBlock from "@components/CenterBlock/CenterBlock";
 import styles from "./layout.module.css";
 import Sorting from "@components/Sorting/Sorting";
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { tracksApi } from "../../Api/tracksApi";
 import { TrackType } from "../../lib/type";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";

@@ -1,12 +1,46 @@
-import { headers } from "next/headers";
-
 export async function fetchFavoriteTracks(access: string) {
   const response = await fetch(
-    "https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${access}`
-    },}
+    "https://skypro-music-api.skyeng.tech/catalog/track/favorite/all/",
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Ошибка");
+  }
+  const data = response.json();
+  return data;
+}
+
+export async function likesFavoriteTracks(access: string, id: number) {
+  const response = await fetch(
+    `https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Ошибка");
+  }
+  const data = response.json();
+  return data;
+}
+
+export async function deleteFavoriteTracks(access: string, id: number) {
+  const response = await fetch(
+    `https://skypro-music-api.skyeng.tech/catalog/track/${id}/favorite/`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    }
   );
   if (!response.ok) {
     throw new Error("Ошибка");

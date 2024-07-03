@@ -5,6 +5,8 @@ import { TrackType } from "../../lib/type";
 import styles from "./Tracks.module.css";
 import { setCurrentTrack } from "../../store/features/playListSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { useLikeTrack } from "../../hooks/useLikes";
+import { useInitializeLikedTracks } from "../../hooks/likes";
 type Props = {
   allTracks: TrackType[];
   track: TrackType;
@@ -15,13 +17,24 @@ const Tracks = ({ allTracks, track }: Props) => {
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    dispatch(setCurrentTrack({ currentTrack: track, currentPlaylist: allTracks }));
+    dispatch(
+      setCurrentTrack({ currentTrack: track, currentPlaylist: allTracks })
+    );
   };
   const { name, author, album, duration_in_seconds } = track;
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
   const isCurrentTrack = currentTrack?.id === track.id;
+
+  const { isLiked, handleLike } = useLikeTrack(track);
+  
+  useInitializeLikedTracks();
+
   return (
-    <div data-testid ="toggletrack" onClick={handleClick} className={styles.contentPlaylist}>
+    <div
+      data-testid="toggletrack"
+      onClick={handleClick}
+      className={styles.contentPlaylist}
+    >
       <div className={styles.playlistItem}>
         <div className={styles.playlistTrack}>
           <div className={styles.trackTitle}>
@@ -56,8 +69,12 @@ const Tracks = ({ allTracks, track }: Props) => {
               {album}
             </a>
           </div>
-          <div>
-            <svg className={styles.trackTimeSvg}>
+          <div onClick={handleLike}>
+            <svg 
+              className={classNames(styles.trackTimeSvg, {
+                [styles.activeLike]: isLiked,
+              })}
+            >
               <use xlinkHref="/icon/sprite.svg#icon-like"></use>
             </svg>
           </div>
