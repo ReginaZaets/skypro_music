@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SigninFormType, SignupFormType, StaredUser } from "../../lib/type";
-import { fetchUser, refreshTokens, userReg } from "../../Api/user";
+import { fetchTokens, fetchUser, refreshTokens, userReg } from "../../Api/user";
 
 export const getUser = createAsyncThunk(
   "user/getUser",
@@ -13,8 +13,14 @@ export const getUser = createAsyncThunk(
 export const getTokens = createAsyncThunk(
   "user/getTokens",
   async ({ email, password }: SigninFormType) => {
-    const tokens = await fetchUser({ email, password });
-    localStorage.setItem("tokens", JSON.stringify(tokens));
+    const tokens = await fetchTokens({ email, password });
+    localStorage.setItem(
+      "tokens",
+      JSON.stringify({
+        access: tokens.access,
+        refresh: tokens.refresh,
+      })
+    );
     return tokens;
   }
 );
@@ -23,7 +29,13 @@ export const refreshToken = createAsyncThunk(
   "user/refreshToken",
   async (refresh: string) => {
     const tokens = await refreshTokens(refresh);
-    localStorage.setItem("tokens", JSON.stringify(tokens));
+    localStorage.setItem(
+      "tokens",
+      JSON.stringify({
+        access: tokens.access,
+        refresh: tokens.refresh,
+      })
+    );
     return tokens;
   }
 );
@@ -51,13 +63,13 @@ type TokensType = {
 };
 const getInitialState = (): AuthStateType => {
   if (typeof window !== "undefined") {
+    const user = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
     return {
-      user: JSON.parse(localStorage.getItem("user") || "") || null,
-      tokens: {
-        access: JSON.parse(localStorage.getItem("tokens") || "") || null,
-        refresh: JSON.parse(localStorage.getItem("tokens") || "") || null,
-      },
-      isAuth: localStorage.getItem("tokens") !== null,
+      user: user ? JSON.parse(user) : null,
+      tokens: token ? JSON.parse(token) : { access: null, refresh: null },
+
+      isAuth: token !== null,
     };
   }
   return {
