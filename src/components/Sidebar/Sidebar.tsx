@@ -4,12 +4,10 @@ import styles from "./Sidebar.module.css";
 import Link from "next/link";
 import User from "@components/User/User";
 
-
 const Sidebar = () => {
-  
   return (
     <div className={styles.mainSidebar}>
-      <User/>
+      <User />
       <div className={styles.sidebarBlock}>
         <div className={styles.sidebarList}>
           <div className={styles.sidebarItem}>
@@ -20,6 +18,7 @@ const Sidebar = () => {
                 alt="Плейлист дня"
                 width={256}
                 height={75}
+                priority
               />
             </Link>
           </div>

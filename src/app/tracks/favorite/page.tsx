@@ -10,15 +10,15 @@ const FavoritePlaylist = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const allTracks = useAppSelector((state) => state.playlist.filteredPlaylist);
+  const allTracks = useAppSelector((state) => state.playlist.likedTracks);
   const tokens = useAppSelector((state) => state.user.tokens);
-  
-
-  useEffect(()=>{
+  console.log(allTracks);
+  useEffect(() => {
     if (tokens.access) {
-        dispatch(getFavoriteTracks(tokens.access));
-      }
-  })
+      dispatch(getFavoriteTracks(tokens.access));
+    }
+  }, [dispatch, tokens.access]);
+
   return (
     <>
       <h2 className={styles.centerblockH2}>Мои треки</h2>

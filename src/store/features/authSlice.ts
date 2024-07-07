@@ -1,12 +1,34 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SigninFormType, SignupFormType, StaredUser } from "../../lib/type";
+import {
+  AuthStateType,
+  SigninFormType,
+  SignupFormType,
+  StaredUser,
+} from "../../lib/type";
 import { fetchTokens, fetchUser, refreshTokens, userReg } from "../../Api/user";
+
+function getDataFromLS(key: string) {
+  try {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
+  } catch (error) {
+    console.error("ошибка", error);
+  }
+}
+
+function setDataToLS(key: string, data: any) {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (error) {
+    console.error("ошибка", error);
+  }
+}
 
 export const getUser = createAsyncThunk(
   "user/getUser",
   async ({ email, password }: SigninFormType) => {
     const user = await fetchUser({ email, password });
-    localStorage.setItem("user", JSON.stringify(user));
+    setDataToLS("user", user);
     return user;
   }
 );
@@ -14,13 +36,7 @@ export const getTokens = createAsyncThunk(
   "user/getTokens",
   async ({ email, password }: SigninFormType) => {
     const tokens = await fetchTokens({ email, password });
-    localStorage.setItem(
-      "tokens",
-      JSON.stringify({
-        access: tokens.access,
-        refresh: tokens.refresh,
-      })
-    );
+    setDataToLS("tokens", tokens);
     return tokens;
   }
 );
@@ -29,13 +45,7 @@ export const refreshToken = createAsyncThunk(
   "user/refreshToken",
   async (refresh: string) => {
     const tokens = await refreshTokens(refresh);
-    localStorage.setItem(
-      "tokens",
-      JSON.stringify({
-        access: tokens.access,
-        refresh: tokens.refresh,
-      })
-    );
+    setDataToLS("tokens", tokens);
     return tokens;
   }
 );
@@ -44,58 +54,35 @@ export const postUser = createAsyncThunk(
   "user/userReg",
   async ({ email, password, username }: SignupFormType) => {
     const user = await userReg({ email, password, username });
-    localStorage.setItem("user", JSON.stringify(user));
+    setDataToLS("user", user);
     return user;
   }
 );
 
-export type AuthStateType = {
-  user: null | StaredUser;
-  tokens: {
-    access: string | null;
-    refresh: string | null;
-  };
-  isAuth: boolean;
-};
 type TokensType = {
   access: string | null;
   refresh: string | null;
 };
-const getInitialState = (): AuthStateType => {
-  if (typeof window !== "undefined") {
-    const user = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
-    return {
-      user: user ? JSON.parse(user) : null,
-      tokens: token ? JSON.parse(token) : { access: null, refresh: null },
-
-      isAuth: token !== null,
-    };
-  }
-  return {
-    user: null,
-    tokens: {
-      access: null,
-      refresh: null,
-    },
-    isAuth: false,
-  };
+const initialState = {
+  user: getDataFromLS("user"),
+  tokens: {
+    access: getDataFromLS("tokens")?.access,
+    refresh: getDataFromLS("tokens")?.refresh
+  },
 };
-const initialState: AuthStateType = getInitialState();
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setIsAuth: (state, action: PayloadAction<boolean>) => {
-      state.isAuth = action.payload;
-    },
+    // setIsAuth: (state, action: PayloadAction<boolean>) => {
+    //   state.isAuth = action.payload;
+    // },
     logout: (state) => {
       state.user = null;
       state.tokens.access = null;
       state.tokens.refresh = null;
       localStorage.removeItem("user");
       localStorage.removeItem("tokens");
-      state.isAuth = false;
     },
   },
   extraReducers(builder) {
@@ -129,5 +116,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setIsAuth } = authSlice.actions;
+export const { logout } = authSlice.actions;
 export const authReducer = authSlice.reducer;

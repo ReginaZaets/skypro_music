@@ -28,3 +28,10 @@ export type SignupFormType = {
   password: string;
   username: string;
 };
+export type AuthStateType = {
+  user: null | StaredUser;
+  tokens: {
+    access: string | null;
+    refresh: string | null;
+  };
+};

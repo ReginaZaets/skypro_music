@@ -5,8 +5,12 @@ import { fetchFavoriteTracks } from "../../Api/favoriteTracks";
 export const getFavoriteTracks = createAsyncThunk(
   "playlistFavoriteTracks",
   async (access: string) => {
-    const favoriteTracks = await fetchFavoriteTracks(access);
-    return favoriteTracks;
+    try {
+      const favoriteTracks = await fetchFavoriteTracks(access);
+      return favoriteTracks;
+    } catch (error) {
+      console.log("ошибка");
+    }
   }
 );
 
@@ -53,7 +57,9 @@ const playListSlice = createSlice({
       state.likedTracks.push(action.payload);
     },
     setDislikeTrack: (state, action: PayloadAction<number>) => {
-      state.likedTracks = state.likedTracks.filter((track) => track.id !== action.payload);
+      state.likedTracks = state.likedTracks.filter(
+        (track) => track.id !== action.payload
+      );
     },
     setInitialPlaylist: (state, action: PayloadAction<TrackType[]>) => {
       state.filteredPlaylist = action.payload;

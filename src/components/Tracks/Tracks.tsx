@@ -27,7 +27,6 @@ const Tracks = ({ allTracks, track }: Props) => {
 
   const { isLiked, handleLike } = useLikeTrack(track);
   
-  useInitializeLikedTracks();
 
   return (
     <div

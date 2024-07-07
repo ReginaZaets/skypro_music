@@ -15,7 +15,7 @@ const Header = () => {
   function onClickBurger() {
     setOpenBurger((prev) => !prev);
   }
-  const isAuth = useAppSelector((state) => state.user.isAuth);
+  const isAuth = useAppSelector((state) => state.user.user?.username);
   const handleLogout = () => {
     dispatch(logout());
     router.push("/signin");
@@ -52,14 +52,12 @@ const Header = () => {
               </Link>
             </li>
             <li className={styles.menuItem}>
-              <Link href="/" className={styles.menuLink}>
+              <Link href="/tracks/favorite" className={styles.menuLink}>
                 Мой плейлист
               </Link>
             </li>
             <li onClick={handleLogout} className={styles.menuItem}>
-              <Link href="/signin" className={styles.menuLink}>
-                {isAuth ? "Выйти" : "Войти"}
-              </Link>
+              {isAuth ? "Выйти" : "Войти"}
             </li>
           </ul>
         </div>

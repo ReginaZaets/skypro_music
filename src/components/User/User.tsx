@@ -8,19 +8,21 @@ import { useEffect } from "react";
 import { refreshTokens } from "../../Api/user";
 
 export default function User() {
+  useInitializeLikedTracks();
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const userName = useAppSelector((state) => state.user.user?.username);
-  const isAuth = useAppSelector((state) => state.user.isAuth);
   // if (!userName) {
   //   return null;
   // }
   const handleLogout = () => {
     dispatch(logout());
     router.push("/");
+    localStorage.removeItem("user");
+    localStorage.removeItem("tokens");
   };
-
+  
   return (
     <div className={styles.sidebarPersonal}>
       <p className={styles.sidebarPersonalName}>{userName}</p>

@@ -12,14 +12,13 @@ type CenterBlockProps = {
   isLoading: boolean;
 };
 const CenterBlock = ({ allTracks, error, isLoading }: CenterBlockProps) => {
-
+  console.log(allTracks);
   const filterTracks = useAppSelector(
     (state) => state.playlist.filteredPlaylist
   );
-
+  //allTracks убрать все треки в одном
   return (
     <div className={styles.mainCenterblock}>
-   
       <div className={styles.centerblockContent}>
         <div className={styles.contentTitle}>
           <div className={classNames(styles.playlistTitleCol, styles.col01)}>
