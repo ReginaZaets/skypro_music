@@ -7,7 +7,7 @@ import {
 } from "../../lib/type";
 import { fetchTokens, fetchUser, refreshTokens, userReg } from "../../Api/user";
 
-function getDataFromLS(key: string) {
+export function getDataFromLS(key: string) {
   try {
     const data = localStorage.getItem(key);
     return data ? JSON.parse(data) : null;
@@ -16,7 +16,7 @@ function getDataFromLS(key: string) {
   }
 }
 
-function setDataToLS(key: string, data: any) {
+export function setDataToLS(key: string, data: any) {
   try {
     localStorage.setItem(key, JSON.stringify(data));
   } catch (error) {
@@ -49,7 +49,6 @@ export const refreshToken = createAsyncThunk(
     return tokens;
   }
 );
-
 export const postUser = createAsyncThunk(
   "user/userReg",
   async ({ email, password, username }: SignupFormType) => {
@@ -67,16 +66,17 @@ const initialState = {
   user: getDataFromLS("user"),
   tokens: {
     access: getDataFromLS("tokens")?.access,
-    refresh: getDataFromLS("tokens")?.refresh
+    refresh: getDataFromLS("tokens")?.refresh,
   },
 };
+
+console.log("initialState в редакс:", initialState);
+
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // setIsAuth: (state, action: PayloadAction<boolean>) => {
-    //   state.isAuth = action.payload;
-    // },
     logout: (state) => {
       state.user = null;
       state.tokens.access = null;
@@ -85,7 +85,7 @@ const authSlice = createSlice({
       localStorage.removeItem("tokens");
     },
   },
-  extraReducers(builder) {
+  extraReducers: (builder) => {
     builder
       .addCase(
         getUser.fulfilled,
@@ -98,6 +98,7 @@ const authSlice = createSlice({
         (state, action: PayloadAction<TokensType>) => {
           (state.tokens.access = action.payload.access),
             (state.tokens.refresh = action.payload.refresh);
+          setDataToLS("tokens", action.payload);
         }
       )
       .addCase(
@@ -105,6 +106,7 @@ const authSlice = createSlice({
         (state, action: PayloadAction<TokensType>) => {
           (state.tokens.access = action.payload.access),
             (state.tokens.refresh = action.payload.refresh);
+          setDataToLS("tokens", action.payload);
         }
       )
       .addCase(

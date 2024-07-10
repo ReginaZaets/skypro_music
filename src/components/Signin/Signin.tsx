@@ -81,6 +81,7 @@ const Signin = () => {
               placeholder="Почта"
               value={formData.email}
               onChange={handleChange}
+              autoComplete="email"
             />
             <input
               className={styles.modalInput}
@@ -89,6 +90,7 @@ const Signin = () => {
               placeholder="Пароль"
               value={formData.password}
               onChange={handleChange}
+              autoComplete="password"
             />
             {error && <p className={styles.error}>{error}</p>}
             <button onClick={handleSubmit} className={styles.modalBtnEnter}>

@@ -187,7 +187,7 @@ const playListSlice = createSlice({
       );
     },
   },
-  extraReducers(builder) {
+  extraReducers: (builder) => {
     builder.addCase(
       getFavoriteTracks.fulfilled,
       (state, action: PayloadAction<TrackType[]>) => {

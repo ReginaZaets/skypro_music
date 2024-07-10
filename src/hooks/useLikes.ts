@@ -13,6 +13,7 @@ import {
 } from "../Api/favoriteTracks";
 
 export const useLikeTrack = (track: TrackType) => {
+
   const likedTracks = useAppSelector((state) => state.playlist.likedTracks);
 
   const dispatch = useAppDispatch();
@@ -40,7 +41,6 @@ export const useLikeTrack = (track: TrackType) => {
         }
       }
     } catch (error) {
-
       alert("Ошибка, нет доступа");
     }
   };

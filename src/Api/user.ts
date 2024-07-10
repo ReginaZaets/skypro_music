@@ -75,7 +75,6 @@ export async function fetchTokens({ email, password }: SigninFormType) {
     throw new Error("Сервер не отвечает");
   }
   const data = await response.json();
-  console.log(data);
   return data;
 }
 
@@ -100,7 +99,5 @@ export async function refreshTokens(refresh: string) {
     throw new Error("Сервер не отвечает");
   }
   const data = await response.json();
-  console.log(data);
-
   return data;
 }

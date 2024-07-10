@@ -5,18 +5,13 @@ import classNames from "classnames";
 import Tracks from "@components/Tracks/Tracks";
 import { TrackType } from "../../lib/type";
 
-import { useAppSelector } from "../../hooks/store";
 type CenterBlockProps = {
   allTracks: TrackType[];
   error: string | null;
   isLoading: boolean;
 };
 const CenterBlock = ({ allTracks, error, isLoading }: CenterBlockProps) => {
-  console.log(allTracks);
-  const filterTracks = useAppSelector(
-    (state) => state.playlist.filteredPlaylist
-  );
-  //allTracks убрать все треки в одном
+
   return (
     <div className={styles.mainCenterblock}>
       <div className={styles.centerblockContent}>
@@ -37,14 +32,14 @@ const CenterBlock = ({ allTracks, error, isLoading }: CenterBlockProps) => {
           </div>
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {filterTracks.length === 0 && isLoading && "Ничего не найдено"}
-        {isLoading && (
-          <div className={styles.playList}>
-            {filterTracks.map((value) => (
-              <Tracks key={value.id} track={value} allTracks={allTracks} />
-            ))}
-          </div>
-        )}
+        {/* {isLoading && "Ничего не найдено"} */}
+        {/* {isLoading && ( */}
+        <div className={styles.playList}>
+          {allTracks.map((value) => (
+            <Tracks key={value.id} track={value} />
+          ))}
+        </div>
+        {/* )} */}
       </div>
     </div>
   );

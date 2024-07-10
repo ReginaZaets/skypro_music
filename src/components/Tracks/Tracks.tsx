@@ -8,25 +8,25 @@ import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { useLikeTrack } from "../../hooks/useLikes";
 import { useInitializeLikedTracks } from "../../hooks/likes";
 type Props = {
-  allTracks: TrackType[];
   track: TrackType;
 };
 
-const Tracks = ({ allTracks, track }: Props) => {
+const Tracks = ({ track }: Props) => {
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
   const dispatch = useAppDispatch();
+  const allTracks = useAppSelector((state) => state.playlist.filteredPlaylist);
 
   const handleClick = () => {
     dispatch(
       setCurrentTrack({ currentTrack: track, currentPlaylist: allTracks })
     );
   };
+
   const { name, author, album, duration_in_seconds } = track;
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
   const isCurrentTrack = currentTrack?.id === track.id;
 
   const { isLiked, handleLike } = useLikeTrack(track);
-  
 
   return (
     <div
@@ -69,7 +69,7 @@ const Tracks = ({ allTracks, track }: Props) => {
             </a>
           </div>
           <div onClick={handleLike}>
-            <svg 
+            <svg
               className={classNames(styles.trackTimeSvg, {
                 [styles.activeLike]: isLiked,
               })}

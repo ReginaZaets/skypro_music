@@ -106,6 +106,7 @@ const Signup = () => {
               name="username"
               placeholder="Имя"
               onChange={handleChange}
+              autoComplete="username"
             />
             <input
               className={styles.modalInput}
@@ -113,6 +114,7 @@ const Signup = () => {
               name="email"
               placeholder="Почта"
               onChange={handleChange}
+              autoComplete="email"
             />
             <input
               className={styles.modalInput}
@@ -120,6 +122,7 @@ const Signup = () => {
               name="password"
               placeholder="Пароль"
               onChange={handleChange}
+              autoComplete="password"
             />
 
             {error && <p className={styles.error}>{error}</p>}
