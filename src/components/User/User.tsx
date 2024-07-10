@@ -3,9 +3,8 @@ import { useInitializeLikedTracks } from "../../hooks/likes";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { useRouter } from "next/navigation";
 import styles from "./User.module.css";
-import { logout } from "../../store/features/authSlice";
+import { getDataFromLS, logout, refreshToken } from "../../store/features/authSlice";
 import { useEffect, useState } from "react";
-import { useRefreshToken } from "../../hooks/refreshTokenAuto";
 
 export default function User() {
   useInitializeLikedTracks();
@@ -14,7 +13,7 @@ export default function User() {
   const [isClient, setIsClient] = useState(false);
   const userName = useAppSelector((state) => state.user.user?.username);
   const refresh = useAppSelector((state) => state.user.tokens?.refresh);
-  useRefreshToken(refresh);
+  // useRefreshToken(refresh);
   useEffect(() => {
     setIsClient(true);
   }, []);
@@ -22,6 +21,23 @@ export default function User() {
   if (!userName) {
     return null;
   }
+  console.log("токены из локал:", getDataFromLS("tokens"));
+
+  console.log("токены из редакс:", refresh);
+
+  async function token() {
+    try {
+      if (refresh) {
+        await Promise.all([dispatch(refreshToken(refresh)).unwrap()]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  setInterval(() => token(), 180000);
+
+
   const handleLogout = () => {
     dispatch(logout());
     router.push("/");

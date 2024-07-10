@@ -5,12 +5,8 @@ import { fetchFavoriteTracks } from "../../Api/favoriteTracks";
 export const getFavoriteTracks = createAsyncThunk(
   "playlistFavoriteTracks",
   async (access: string) => {
-    try {
-      const favoriteTracks = await fetchFavoriteTracks(access);
-      return favoriteTracks;
-    } catch (error) {
-      console.log("ошибка");
-    }
+    const favoriteTracks = await fetchFavoriteTracks(access);
+    return favoriteTracks;
   }
 );
 
