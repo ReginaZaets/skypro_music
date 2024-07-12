@@ -8,8 +8,10 @@ export async function fetchFavoriteTracks(access: string) {
       },
     }
   );
-  if (!response.ok) {
-    throw new Error("Ошибка");
+  if (response.status === 401) {
+    throw new Error("Нет авторизации");
+  } else if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
   }
   const data = response.json();
   return data;

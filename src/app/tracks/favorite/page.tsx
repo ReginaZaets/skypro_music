@@ -5,8 +5,10 @@ import React, { useEffect, useState } from "react";
 import styles from "../layout.module.css";
 import { useAppDispatch, useAppSelector } from "../../../hooks/store";
 import { getFavoriteTracks } from "../../../store/features/playListSlice";
+import { useInitializeLikedTracks } from "../../../hooks/likes";
 
 const FavoritePlaylist = () => {
+  useInitializeLikedTracks()
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();

@@ -3,7 +3,11 @@ import { useInitializeLikedTracks } from "../../hooks/likes";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { useRouter } from "next/navigation";
 import styles from "./User.module.css";
-import { getDataFromLS, logout, refreshToken } from "../../store/features/authSlice";
+import {
+  getDataFromLS,
+  logout,
+  refreshToken,
+} from "../../store/features/authSlice";
 import { useEffect, useState } from "react";
 
 export default function User() {
@@ -21,22 +25,11 @@ export default function User() {
   if (!userName) {
     return null;
   }
-  console.log("токены из локал:", getDataFromLS("tokens"));
+  // console.log("токены из локал:", getDataFromLS("tokens"));
 
-  console.log("токены из редакс:", refresh);
+  // console.log("токены из редакс:", refresh);
 
-  async function token() {
-    try {
-      if (refresh) {
-        await Promise.all([dispatch(refreshToken(refresh)).unwrap()]);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  setInterval(() => token(), 180000);
-
+  // useToken();
 
   const handleLogout = () => {
     dispatch(logout());

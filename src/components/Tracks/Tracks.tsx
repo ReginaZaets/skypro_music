@@ -7,11 +7,13 @@ import { setCurrentTrack } from "../../store/features/playListSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { useLikeTrack } from "../../hooks/useLikes";
 import { useInitializeLikedTracks } from "../../hooks/likes";
+
 type Props = {
   track: TrackType;
 };
 
 const Tracks = ({ track }: Props) => {
+  useInitializeLikedTracks()
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
   const dispatch = useAppDispatch();
   const allTracks = useAppSelector((state) => state.playlist.filteredPlaylist);

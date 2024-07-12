@@ -129,16 +129,16 @@ const playListSlice = createSlice({
       };
       const filterTracks = state.initialPlaylist.filter((track) => {
         const hasSearchString = track.name //если поставить author, то будет искать треки по автору
-          .toLocaleLowerCase()
-          .includes(state.filterOptions.searchString.toLocaleLowerCase());
+          .toLowerCase()
+          .includes(state.filterOptions.searchString.toLowerCase());
         // если мы выбрали фильтры для авторов, то проверяем трек на совпадение этим автором
         // если мы не выбрали фильтр по автору, то трек возвращать не надо
         const hasAuthor =
-          state.filterOptions.author.length > 0
+          state.filterOptions.author.length !== 0
             ? state.filterOptions.author.includes(track.author) // возвращает true или false
             : true;
         const hasGenre =
-          state.filterOptions.genre.length > 0
+          state.filterOptions.genre.length !== 0
             ? state.filterOptions.genre.includes(track.genre) // возвращает true или false
             : true;
         return hasSearchString && hasAuthor && hasGenre;
