@@ -115,7 +115,12 @@
   font-size: 18px;
   color: #ffffff;
 }
-
+.modalBtnEnter:hover {
+  background-color: #3f007d;
+}
+.modalBtnEnter:active {
+  background-color: #271a58;
+}
 .modalBtnSignup {
   width: 278px;
   height: 52px;
@@ -139,7 +144,12 @@
   justify-content: center;
   margin-top: 20px;
 }
-
+.modalBtnSignup:hover {
+  background-color: #d0cece;
+}
+.modalBtnSignup:active {
+  background-color: #919191;
+}
 .login {
   margin-bottom: 30px;
 }

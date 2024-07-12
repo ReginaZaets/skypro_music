@@ -27,10 +27,11 @@ const Filter = ({ allTracks, title, list, onClick, value, isOpen }: Props) => {
   //функция возвращает уникальных авторов и жанров
   const filterList = () => {
     if (value !== "order") {
-      const array = new Set(
-        allTracks?.map((track: TrackType) => track[value]) || []
+      // Создаем Set для получения уникальных значений и преобразуем его в массив
+      const array = Array.from(
+        new Set(allTracks?.map((track: TrackType) => track[value]))
       );
-      return Array.from(array);
+      return array;
     }
     return order;
   };

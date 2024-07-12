@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useAppDispatch } from "../../hooks/store";
+import { useAppDispatch, useAppSelector } from "../../hooks/store";
 import { resetFilters, setFilters } from "../../store/features/playListSlice";
 import styles from "./Search.module.css";
 
@@ -8,14 +8,17 @@ const Search = () => {
   const [searchResult, setSearchResult] = useState<string>("");
   const dispatch = useAppDispatch();
 
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const search = event.target.value;
+
     setSearchResult(search);
     if (search.trim() === "") {
       dispatch(resetFilters());
     } else {
       dispatch(setFilters({ searchString: search }));
     }
+    
   };
 
   return (
@@ -30,7 +33,7 @@ const Search = () => {
         name="search"
         value={searchResult}
         onChange={handleSearch}
-        data-testid ="search"
+        data-testid="search"
       />
     </div>
   );

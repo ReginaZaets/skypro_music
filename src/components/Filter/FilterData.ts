@@ -13,6 +13,7 @@ export const FilterData: FilterType[] = [
     title: "жанру",
     // list: [],
     value: "genre",
+    
   },
   {
     title: "году выпуска",

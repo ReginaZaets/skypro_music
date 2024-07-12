@@ -13,6 +13,7 @@ const Signup = () => {
     email: "",
     password: "",
     username: "",
+    repeatPassword: "",
   });
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +28,12 @@ const Signup = () => {
   };
   const validateForm = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!formData.email && !formData.password && !formData.username) {
+    if (
+      !formData.email &&
+      !formData.password &&
+      !formData.username &&
+      !formData.repeatPassword
+    ) {
       setError("Введите имя, логин и пароль");
       return false;
     } else if (!formData.username) {
@@ -38,6 +44,9 @@ const Signup = () => {
       return false;
     } else if (!formData.password) {
       setError("Введите пароль");
+      return false;
+    } else if (formData.password !== formData.repeatPassword) {
+      setError("Пароли не совпадают");
       return false;
     }
     return true;
@@ -124,7 +133,14 @@ const Signup = () => {
               onChange={handleChange}
               autoComplete="password"
             />
-
+            <input
+              className={styles.modalInput}
+              type="password"
+              name="repeatPassword"
+              placeholder="Повторите пароль"
+              onChange={handleChange}
+              autoComplete="newPassword"
+            />
             {error && <p className={styles.error}>{error}</p>}
 
             <button onClick={handleSubmit} className={styles.modalBtnSignupEnt}>

@@ -30,7 +30,6 @@
 
 .modalFormLogin {
   width: 366px;
-  height: 439px;
   background-color: #ffffff;
   border-radius: 12px;
   display: -webkit-box;
@@ -135,7 +134,12 @@
   justify-content: center;
   margin-top: 30px;
 }
-
+.modalBtnSignupEnt:hover {
+  background-color: #3f007d;
+}
+.modalBtnSignupEnt:active {
+  background-color: #271a58;
+}
 .error {
   font-size: 10px;
   color: red;

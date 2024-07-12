@@ -1,36 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Стили декомпозированы покомпонентно и используют CSS-модули. Глобальные стили размещены в 
+globals.css
+2. В проекте была созданы следующие страницы: главная, авторизация, регистрация и страница "404". Реализована подгрузка всех треков из API.
+3. Настроены eslint и prettier. Корректность кода проверяется автоматически перед каждым коммитом с помощью lefthook (аналог husky). Закомитить код, который не проходит проверку eslint не получится.
+4. В проект добавлена возможность фильтровать треки, изменять порядок а также искать по названию. Добавлены страницы подборок с треками этих подборок и одним общим Layout. 
+5. В проект добавлена возможность управления треками. Реализовано воспроизведение, повтор, перемешивание, изменение текущего времени в воиспреведении трека, а также изменение громкости.
+6. Добавлены тесты, проверяющие функциональность компонентов и функций. 
+7. В проект добавлена регистрация и авторизация пользователя. Добавлена возможность лайкать и убирать лайки трекам авторизованным пользователям. Добавлена страница любимых треков авторизованного пользователя. Добавлена отработка ошибок.
