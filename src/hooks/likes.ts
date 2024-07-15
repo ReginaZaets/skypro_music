@@ -2,8 +2,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./store";
 import { getFavoriteTracks } from "../store/features/playListSlice";
-import { Token } from "./refresh";
-import { getTokens } from "../store/features/authSlice";
+
 
 export function useInitializeLikedTracks() {
   const dispatch = useAppDispatch();
@@ -16,20 +15,7 @@ export function useInitializeLikedTracks() {
           await dispatch(getFavoriteTracks(tokens.access));
         }
       } catch (error: any) {
-        console.log(error);
-        if (error.message === "Unauthorized") {
-          // Обработка ошибки 401
-          console.error("Ошибка авторизации: требуется повторная авторизация");
-          // Вызываем хук для обновления токена
-          // Token();
-          // dispatch(getTokens(tokens.access));
-        } else {
-          console.error(
-            "Ошибка при получении избранных треков:",
-            error.message
-          );
-          // Дополнительная логика для обработки других ошибок
-        }
+        console.log(error)
       }
     };
 
