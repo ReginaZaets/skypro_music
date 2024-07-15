@@ -16,12 +16,13 @@ export function useInitializeLikedTracks() {
           await dispatch(getFavoriteTracks(tokens.access));
         }
       } catch (error: any) {
+        console.log(error);
         if (error.message === "Unauthorized") {
           // Обработка ошибки 401
           console.error("Ошибка авторизации: требуется повторная авторизация");
           // Вызываем хук для обновления токена
-          Token();
-          dispatch(getTokens(tokens.access));
+          // Token();
+          // dispatch(getTokens(tokens.access));
         } else {
           console.error(
             "Ошибка при получении избранных треков:",

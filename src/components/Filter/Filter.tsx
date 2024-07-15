@@ -13,16 +13,17 @@ type Props = {
   onClick: (value: string) => void;
   value: "author" | "order" | "genre";
   isOpen: boolean;
-  allTracks: TrackType[];
 };
 
-const Filter = ({ allTracks, title, list, onClick, value, isOpen }: Props) => {
+const Filter = ({ title, list, onClick, value, isOpen }: Props) => {
   const [filterNumber, setFilterNumber] = useState<number>(0);
 
   const dispatch = useAppDispatch();
   const orderList = useAppSelector(
     (state) => state.playlist.filterOptions.order
   );
+
+  const allTracks = useAppSelector((state) => state.playlist.initialPlaylist);
 
   //функция возвращает уникальных авторов и жанров
   const filterList = () => {

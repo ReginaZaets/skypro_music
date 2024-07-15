@@ -40,7 +40,9 @@ export const useLikeTrack = (track: TrackType | null) => {
         }
       }
     } catch (error) {
+      
       alert("Ошибка, нет доступа");
+      console.log(error.message);
     }
   };
 

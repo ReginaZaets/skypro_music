@@ -98,7 +98,6 @@ const authSlice = createSlice({
         (state, action: PayloadAction<TokensType>) => {
           (state.tokens.access = action.payload.access),
             (state.tokens.refresh = action.payload.refresh);
-          setDataToLS("tokens", action.payload);
         }
       )
       .addCase(
@@ -106,7 +105,6 @@ const authSlice = createSlice({
         (state, action: PayloadAction<TokensType>) => {
           (state.tokens.access = action.payload.access),
             (state.tokens.refresh = action.payload.refresh);
-          setDataToLS("tokens", action.payload);
         }
       )
       .addCase(

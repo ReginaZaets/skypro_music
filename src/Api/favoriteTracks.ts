@@ -27,11 +27,13 @@ export async function likesFavoriteTracks(access: string, id: number) {
       },
     }
   );
-  if (!response.ok) {
-    throw new Error("Ошибка");
+  const isResponseOk = response.ok;
+  const status = response.status;
+  const result = await response.json();
+  if (!isResponseOk) {
+    throw new Error(JSON.stringify({ ...result, status }));
   }
-  const data = response.json();
-  return data;
+  return result;
 }
 
 export async function deleteFavoriteTracks(access: string, id: number) {
@@ -44,9 +46,11 @@ export async function deleteFavoriteTracks(access: string, id: number) {
       },
     }
   );
-  if (!response.ok) {
-    throw new Error("Ошибка");
+  const isResponseOk = response.ok;
+  const status = response.status;
+  const result = await response.json();
+  if (!isResponseOk) {
+    throw new Error(JSON.stringify({ ...result, status }));
   }
-  const data = response.json();
-  return data;
+  return result;
 }

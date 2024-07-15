@@ -31,7 +31,7 @@ const MainTracksPage = () => {
     <>
       <div>
         <h2 className={styles.centerblockH2}>Треки</h2>
-        <Sorting allTracks={allTracks} />
+        <Sorting />
         <CenterBlock allTracks={allTracks} />
       </div>
     </>
