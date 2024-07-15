@@ -12,6 +12,7 @@ import {
   likesFavoriteTracks,
 } from "../Api/favoriteTracks";
 import { refreshToken } from "../store/features/authSlice";
+import { refreshTokens } from "../Api/user";
 
 export const useLikeTrack = (track: TrackType | null) => {
   const likedTracks = useAppSelector((state) => state.playlist.likedTracks);
@@ -22,7 +23,7 @@ export const useLikeTrack = (track: TrackType | null) => {
 
   const isLiked = likedTracks.some((tracks) => track?.id === tracks.id);
 
-  const refresh = useAppSelector((state) => state.user.tokens?.refresh);
+  const refresh = useAppSelector((state) => state.user.tokens.refresh);
 
   const handleLike = async (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -45,7 +46,19 @@ export const useLikeTrack = (track: TrackType | null) => {
     } catch (error: any) {
       const er = JSON.parse(error.message);
       if (er.status === 401) {
-        dispatch(refreshToken(refresh));
+        const newTokens = await refreshTokens(refresh);
+        dispatch(refreshToken(newTokens));
+        if (isLiked) {
+          if (tokens && track) {
+            await deleteFavoriteTracks(tokens, track.id);
+            dispatch(setDislikeTrack(track.id));
+          }
+        } else {
+          if (tokens && track) {
+            await likesFavoriteTracks(tokens, track.id);
+            dispatch(setLikeTrack(track));
+          }
+        }
       }
       alert("Ошибка, нет доступа");
       console.log(error.message);

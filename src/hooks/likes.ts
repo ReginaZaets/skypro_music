@@ -20,5 +20,5 @@ export function useInitializeLikedTracks() {
     };
 
     fetchData();
-  }, [tokens.access, dispatch]); // Уточняем зависимости
+  }, [tokens.access, dispatch]);
 }
