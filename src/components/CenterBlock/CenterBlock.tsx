@@ -4,22 +4,18 @@ import styles from "./CenterBlock.module.css";
 import classNames from "classnames";
 import Tracks from "@components/Tracks/Tracks";
 import { TrackType } from "../../lib/type";
-
+import Loading from "@components/Loading/Loading";
 import { useAppSelector } from "../../hooks/store";
+
 type CenterBlockProps = {
   allTracks: TrackType[];
-  error: string | null;
-  isLoading: boolean;
 };
-const CenterBlock = ({ allTracks, error, isLoading }: CenterBlockProps) => {
-
-  const filterTracks = useAppSelector(
-    (state) => state.playlist.filteredPlaylist
-  );
+const CenterBlock = ({ allTracks }: CenterBlockProps) => {
+  const error = useAppSelector((state) => state.playlist.error);
+  const isLoading = useAppSelector((state) => state.playlist.isLoading);
 
   return (
     <div className={styles.mainCenterblock}>
-   
       <div className={styles.centerblockContent}>
         <div className={styles.contentTitle}>
           <div className={classNames(styles.playlistTitleCol, styles.col01)}>
@@ -38,14 +34,13 @@ const CenterBlock = ({ allTracks, error, isLoading }: CenterBlockProps) => {
           </div>
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {filterTracks.length === 0 && isLoading && "Ничего не найдено"}
-        {isLoading && (
-          <div className={styles.playList}>
-            {filterTracks.map((value) => (
-              <Tracks key={value.id} track={value} allTracks={allTracks} />
-            ))}
-          </div>
-        )}
+        {!isLoading && <Loading />}
+        {isLoading && allTracks.length === 0 && "ничего не найдено"}
+        <div className={styles.playList}>
+          {allTracks.map((value) => (
+            <Tracks key={value.id} track={value} />
+          ))}
+        </div>
       </div>
     </div>
   );

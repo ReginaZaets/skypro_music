@@ -26,6 +26,8 @@ export type PlayListStateType = {
   filteredPlaylist: TrackType[]; //Массив отфильтрованных треков.
   initialPlaylist: TrackType[]; //Массив исходных треков, до применения фильтрации.
   likedTracks: TrackType[];
+  isLoading: boolean;
+  error: string | null;
 };
 const initialState: PlayListStateType = {
   currentPlaylist: [],
@@ -43,12 +45,22 @@ const initialState: PlayListStateType = {
   filteredPlaylist: [],
   initialPlaylist: [],
   likedTracks: [],
+  isLoading: false,
+  error: null,
 };
 
 const playListSlice = createSlice({
   name: "playlist",
   initialState,
   reducers: {
+    setLikeTrack: (state, action: PayloadAction<TrackType>) => {
+      state.likedTracks.push(action.payload);
+    },
+    setDislikeTrack: (state, action: PayloadAction<number>) => {
+      state.likedTracks = state.likedTracks.filter(
+        (track) => track.id !== action.payload
+      );
+    },
     setInitialPlaylist: (state, action: PayloadAction<TrackType[]>) => {
       state.filteredPlaylist = action.payload;
       state.initialPlaylist = action.payload;
@@ -119,18 +131,19 @@ const playListSlice = createSlice({
         searchString:
           action.payload.searchString || state.filterOptions.searchString,
       };
+
       const filterTracks = state.initialPlaylist.filter((track) => {
         const hasSearchString = track.name //если поставить author, то будет искать треки по автору
-          .toLocaleLowerCase()
-          .includes(state.filterOptions.searchString.toLocaleLowerCase());
+          .toLowerCase()
+          .includes(state.filterOptions.searchString.toLowerCase());
         // если мы выбрали фильтры для авторов, то проверяем трек на совпадение этим автором
         // если мы не выбрали фильтр по автору, то трек возвращать не надо
         const hasAuthor =
-          state.filterOptions.author.length > 0
+          state.filterOptions.author.length !== 0
             ? state.filterOptions.author.includes(track.author) // возвращает true или false
             : true;
         const hasGenre =
-          state.filterOptions.genre.length > 0
+          state.filterOptions.genre.length !== 0
             ? state.filterOptions.genre.includes(track.genre) // возвращает true или false
             : true;
         return hasSearchString && hasAuthor && hasGenre;
@@ -170,10 +183,18 @@ const playListSlice = createSlice({
       state.likedTracks.push(action.payload);
     },
     deleteTrack: (state, action: PayloadAction<TrackType>) => {
-      state.likedTracks = state.likedTracks.filter((el)=>el.id !== action.payload.id)
+      state.likedTracks = state.likedTracks.filter(
+        (el) => el.id !== action.payload.id
+      );
+    },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
     },
   },
-  extraReducers(builder) {
+  extraReducers: (builder) => {
     builder.addCase(
       getFavoriteTracks.fulfilled,
       (state, action: PayloadAction<TrackType[]>) => {
@@ -192,6 +213,10 @@ export const {
   setFilters,
   setInitialPlaylist,
   resetFilters,
+  setLikeTrack,
+  setDislikeTrack,
+  setIsLoading,
+  setError,
 } = playListSlice.actions;
 
 export const playlistReducer = playListSlice.reducer;

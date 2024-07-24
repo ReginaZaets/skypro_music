@@ -1,54 +1,91 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SigninFormType, StaredUser } from "../../lib/type";
-import { fetchUser } from "../../Api/user";
+import {
+  AuthStateType,
+  SigninFormType,
+  SignupFormType,
+  StaredUser,
+} from "../../lib/type";
+import { fetchTokens, fetchUser, refreshTokens, userReg } from "../../Api/user";
+
+export function getDataFromLS(key: string) {
+  try {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
+  } catch (error) {
+    console.error("ошибка", error);
+  }
+}
+
+export function setDataToLS(key: string, data: any) {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (error) {
+    console.error("ошибка", error);
+  }
+}
 
 export const getUser = createAsyncThunk(
   "user/getUser",
   async ({ email, password }: SigninFormType) => {
     const user = await fetchUser({ email, password });
+    setDataToLS("user", user);
     return user;
   }
 );
 export const getTokens = createAsyncThunk(
   "user/getTokens",
   async ({ email, password }: SigninFormType) => {
-    const tokens = await fetchUser({ email, password });
+    const tokens = await fetchTokens({ email, password });
+    setDataToLS("tokens", tokens);
     return tokens;
   }
 );
-export type AuthStateType = {
-  user: null | StaredUser;
-  tokens: {
-    access: string | null;
-    refresh: string | null;
-  };
-};
+
+export const refreshToken = createAsyncThunk(
+  "user/refreshToken",
+  async (refresh: string) => {
+    const tokens = await refreshTokens(refresh);
+    setDataToLS("tokens", tokens);
+    return tokens;
+  }
+);
+export const postUser = createAsyncThunk(
+  "user/userReg",
+  async ({ email, password, username }: SignupFormType) => {
+    const user = await userReg({ email, password, username });
+    setDataToLS("user", user);
+    return user;
+  }
+);
+
 type TokensType = {
   access: string | null;
   refresh: string | null;
 };
-const initialState: AuthStateType = {
-  user: null,
+const initialState = {
+  user: getDataFromLS("user"),
   tokens: {
-    access: null,
-    refresh: null,
+    access: getDataFromLS("tokens")?.access,
+    refresh: getDataFromLS("tokens")?.refresh,
   },
 };
+
+// console.log("initialState в редакс:", initialState);
+
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // setAuthState: (state, action: PayloadAction<boolean>) => {
-    //   state.authState = action.payload;
-    // },
     logout: (state) => {
       state.user = null;
       state.tokens.access = null;
       state.tokens.refresh = null;
+      localStorage.removeItem("user");
+      localStorage.removeItem("tokens");
     },
   },
-  extraReducers(builder) {
+  extraReducers: (builder) => {
     builder
       .addCase(
         getUser.fulfilled,
@@ -61,6 +98,19 @@ const authSlice = createSlice({
         (state, action: PayloadAction<TokensType>) => {
           (state.tokens.access = action.payload.access),
             (state.tokens.refresh = action.payload.refresh);
+        }
+      )
+      .addCase(
+        refreshToken.fulfilled,
+        (state, action: PayloadAction<TokensType>) => {
+          (state.tokens.access = action.payload.access),
+            (state.tokens.refresh = action.payload.refresh);
+        }
+      )
+      .addCase(
+        postUser.fulfilled,
+        (state, action: PayloadAction<StaredUser>) => {
+          state.user = action.payload;
         }
       );
   },

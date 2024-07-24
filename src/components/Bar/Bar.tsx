@@ -19,8 +19,11 @@ import {
   setLoop,
 } from "../../store/features/playListSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/store";
+import { useLikeTrack } from "../../hooks/useLikes";
+import { useInitializeLikedTracks } from "../../hooks/likes";
 
 const Bar = () => {
+  useInitializeLikedTracks()
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [volume, setVolume] = useState(0.5);
@@ -42,6 +45,9 @@ const Bar = () => {
 
   const isPlaying = useAppSelector((state) => state.playlist.isPlaying);
   const currentTrack = useAppSelector((state) => state.playlist.currentTrack);
+  
+  const { isLiked, handleLike } = useLikeTrack(currentTrack);
+
   const dispatch = useAppDispatch();
 
   // Функция для воспроизведения и паузы
@@ -123,6 +129,7 @@ const Bar = () => {
   if (!currentTrack) {
     return null;
   }
+  
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
@@ -157,7 +164,11 @@ const Bar = () => {
                   ></use>
                 </svg>
               </div>
-              <div data-testid='nextTrack' onClick={handleNext} className={styles.playerBtnNext}>
+              <div
+                data-testid="nextTrack"
+                onClick={handleNext}
+                className={styles.playerBtnNext}
+              >
                 <svg className={styles.playerBtnNextSvg}>
                   <use xlinkHref="/icon/sprite.svg#icon-next"></use>
                 </svg>
@@ -208,29 +219,36 @@ const Bar = () => {
               </div>
 
               <div className={styles.trackPlayLikeDis}>
-                <div
-                  className={classNames(styles.trackPlayLike, styles.btnIcon)}
-                >
-                  <svg className={styles.trackPlayLikeSvg}>
-                    <use
-                      onClick={handleTreck}
-                      xlinkHref="/icon/sprite.svg#icon-like"
-                    ></use>
-                  </svg>
-                </div>
-                <div
-                  className={classNames(
-                    styles.trackPlayDislike,
-                    styles.btnIcon
-                  )}
-                >
-                  <svg className={styles.trackPlayDislikeSvg}>
-                    <use
-                      onClick={handleTreck}
-                      xlinkHref="/icon/sprite.svg#icon-dislike"
-                    ></use>
-                  </svg>
-                </div>
+                {isLiked ? (
+                  <div
+                    onClick={handleLike}
+                    className={classNames(
+                      styles.trackPlayDislike,
+                      styles.btnIcon
+                    )}
+                  >
+                    <svg
+                      className={classNames(styles.trackPlayDislikeSvg, {
+                        [styles.activeLike]: isLiked,
+                      })}
+                    >
+                      <use xlinkHref="/icon/sprite.svg#icon-dislike"></use>
+                    </svg>
+                  </div>
+                ) : (
+                  <div
+                    onClick={handleLike}
+                    className={classNames(styles.trackPlayLike, styles.btnIcon)}
+                  >
+                    <svg
+                      className={classNames(styles.trackPlayLikeSvg, {
+                        [styles.activeLike]: isLiked,
+                      })}
+                    >
+                      <use xlinkHref="/icon/sprite.svg#icon-like"></use>
+                    </svg>
+                  </div>
+                )}
               </div>
             </div>
           </div>

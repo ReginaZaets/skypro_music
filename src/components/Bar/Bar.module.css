@@ -349,3 +349,9 @@
   display: flex;
   justify-content: flex-end;
 }
+
+.activeLike {
+  fill: #ad61ff;
+  width: 14px;
+  height: 12px;
+}

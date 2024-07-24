@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/store";
-import { setInitialPlaylist } from "../../../../store/features/playListSlice";
+import {
+  setError,
+  setInitialPlaylist,
+  setIsLoading,
+} from "../../../../store/features/playListSlice";
 import { playlistCategory } from "../../../../Api/playlistCategory";
 import CenterBlock from "@components/CenterBlock/CenterBlock";
 import styles from "../../layout.module.css";
@@ -13,8 +17,6 @@ type CategoryProps = {
   };
 };
 const Category = ({ params }: CategoryProps) => {
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const allTracks = useAppSelector((state) => state.playlist.filteredPlaylist);
   const dispatch = useAppDispatch();
   let namePlaylist = "";
@@ -35,17 +37,17 @@ const Category = ({ params }: CategoryProps) => {
     playlistCategory(params.id)
       .then((response) => {
         dispatch(setInitialPlaylist(response.items));
-        setIsLoading(true);
+        dispatch(setIsLoading(true));
       })
       .catch((err) => {
         console.log(err.message);
-        setError("ошибка загрузки треков");
+        dispatch(setError("ошибка загрузки треков"));
       });
   }, [params.id, dispatch]);
   return (
     <>
       <h2 className={styles.centerblockH2}>{namePlaylist}</h2>
-      <CenterBlock allTracks={allTracks} error={error} isLoading={isLoading} />
+      <CenterBlock allTracks={allTracks} />
     </>
   );
 };

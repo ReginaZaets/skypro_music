@@ -48,13 +48,12 @@ const track2 = {
 };
 
 describe("Bar component", () => {
-  const allTracks = [track1, track2];
 
   test("should play the next track after the current track ends", async () => {
     window.HTMLMediaElement.prototype.play = () => Promise.resolve();
     render(
       <ReduxProvider>
-        <Tracks allTracks={allTracks} track={track1} />
+        <Tracks track={track1} />
         <Bar />
       </ReduxProvider>
     );
